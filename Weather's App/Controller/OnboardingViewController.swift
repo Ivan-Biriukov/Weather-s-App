@@ -58,6 +58,9 @@ class OnboardingViewController: UIViewController {
     private let discriptionLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular16()
+        lb.minimumScaleFactor = 0.1
+        lb.adjustsFontSizeToFitWidth = true
+        lb.lineBreakMode = .byClipping
         lb.textAlignment = .center
         lb.numberOfLines = 0
         lb.textColor = .lightGrayText
@@ -80,7 +83,7 @@ class OnboardingViewController: UIViewController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.alignment = .center
-        stack.distribution = .fillProportionally
+        stack.distribution = .equalSpacing
         stack.spacing = 30
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -98,19 +101,28 @@ class OnboardingViewController: UIViewController {
         configureInfoPageControll()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UserDefaults.standard.set(true, forKey: "onboardingComplete")
+    }
 
     // MARK: - Buttons Methods
     
     @objc func skipTaped() {
-
+        skipButton.alpha = 0.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.skipButton.alpha = 1
+            let newVC = MainViewController()
+            newVC.modalPresentationStyle = .fullScreen
+            self.present(newVC, animated: true)
+        }
     }
     
     @objc func nextButtonTaped() {
         if currentPageNumber <= 3 {
             currentPageNumber += 1
-        } else {
-            currentPageNumber = 0
         }
+        updateUI(pageNumber: currentPageNumber)
     }
     
     
@@ -146,36 +158,40 @@ class OnboardingViewController: UIViewController {
         }
     }
     
-//    private func updateUI(pageNumber num: Int) {
-//        switch num {
-//        case 1:
-//            self
-//        default:
-//            <#code#>
-//        }
-//    }
+    private func updateUI(pageNumber num: Int) {
+        if num < 4 {
+            let indexPath = NSIndexPath(row: num, section: 0)
+            let data = OnboardingDataManager.dataArray[num]
+            colletionView.scrollToItem(at: indexPath as IndexPath, at: .centeredHorizontally, animated: true)
+            colletionViewPageControll.currentPage = num
+            titleLabel.text = data.mainTitleText
+            discriptionLabel.text = data.descriptionText
+            nextButton.setImage(UIImage(named: data.nextButtonImage), for: .normal)
+        } else {
+            let newVC = MainViewController()
+            newVC.modalPresentationStyle = .fullScreen
+            present(newVC, animated: true)
+        }
+
+    }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             skipButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             skipButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            
             colletionView.topAnchor.constraint(equalTo: skipButton.bottomAnchor, constant: 10),
             colletionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             colletionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             colletionView.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: -30),
             colletionViewPageControll.topAnchor.constraint(equalTo: colletionView.bottomAnchor, constant: -50),
             colletionViewPageControll.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -50),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 50),
-            
-            contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
+            contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 45),
             contentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 54),
             contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -54),
-            contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -60)
-            
+            contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -35)
         ])
     }
 }
@@ -191,11 +207,8 @@ extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OnboardingCell", for: indexPath) as! OnboardingCollectionViewCell
-        
         let currentItem = OnboardingDataManager.dataArray[indexPath.row]
-        
         cell.cellData = currentItem
-        
         return cell
     }
 }
