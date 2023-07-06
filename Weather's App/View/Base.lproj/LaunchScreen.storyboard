@@ -8,6 +8,14 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Regular.ttf">
+            <string>Poppins-Regular</string>
+        </array>
+        <array key="Poppins-SemiBold.ttf">
+            <string>Poppins-SemiBold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -27,13 +35,29 @@
                                     <constraint firstAttribute="height" constant="147" id="PaI-9y-ac4"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voN-PF-zMI">
+                                <rect key="frame" x="108.66666666666669" y="458" width="176" height="56"/>
+                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="40"/>
+                                <color key="textColor" red="0.039215686274509803" green="0.039215686274509803" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forecast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="quN-cn-Ryd">
+                                <rect key="frame" x="144.66666666666666" y="524" width="104" height="34"/>
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="24"/>
+                                <color key="textColor" red="0.55294117647058827" green="0.58431372549019611" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="quN-cn-Ryd" firstAttribute="top" secondItem="voN-PF-zMI" secondAttribute="bottom" constant="10" id="6bt-2z-Ba4"/>
                             <constraint firstItem="91J-ev-gWQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="203" id="CCz-YK-j1e"/>
                             <constraint firstItem="llE-Ov-wvO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EZB-qr-2LO"/>
+                            <constraint firstItem="voN-PF-zMI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="FFT-qO-VmS"/>
+                            <constraint firstItem="voN-PF-zMI" firstAttribute="top" secondItem="91J-ev-gWQ" secondAttribute="bottom" constant="49" id="Ndw-UL-onM"/>
                             <constraint firstAttribute="bottom" secondItem="llE-Ov-wvO" secondAttribute="bottom" id="WEk-LB-bXL"/>
+                            <constraint firstItem="quN-cn-Ryd" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="XLr-qS-yQi"/>
                             <constraint firstItem="llE-Ov-wvO" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="YaR-RF-flx"/>
                             <constraint firstItem="llE-Ov-wvO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="maB-gS-Ibd"/>
                             <constraint firstItem="91J-ev-gWQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qQr-tf-lFO"/>
@@ -46,7 +70,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchLogo" width="296" height="276"/>
+        <image name="LaunchLogo" width="295.66665649414062" height="275.33334350585938"/>
         <image name="LaunchScreen" width="360" height="760"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
