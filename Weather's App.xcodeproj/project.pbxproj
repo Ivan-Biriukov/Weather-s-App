@@ -20,6 +20,9 @@
 		57AADD4C2A563B92002E5711 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AADD4B2A563B92002E5711 /* OnboardingViewController.swift */; };
 		57AADD512A563B9A002E5711 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57AADD502A563B9A002E5711 /* Assets.xcassets */; };
 		57AADD542A563B9A002E5711 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57AADD522A563B9A002E5711 /* LaunchScreen.storyboard */; };
+		57ABEFEB2A584DAB0034F0BE /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABEFEA2A584DAB0034F0BE /* TodayViewController.swift */; };
+		57ABEFED2A584DD00034F0BE /* ForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABEFEC2A584DD00034F0BE /* ForecastViewController.swift */; };
+		57ABEFEF2A584DED0034F0BE /* PrecipitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABEFEE2A584DED0034F0BE /* PrecipitationViewController.swift */; };
 		57B5937E2A573747000ADE4D /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5937D2A573747000ADE4D /* OnboardingCollectionViewCell.swift */; };
 		57B593802A5737F5000ADE4D /* OnboardingDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5937F2A5737F5000ADE4D /* OnboardingDataManager.swift */; };
 		57B593862A57728F000ADE4D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B593852A57728F000ADE4D /* MainViewController.swift */; };
@@ -41,6 +44,9 @@
 		57AADD502A563B9A002E5711 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57AADD532A563B9A002E5711 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57AADD552A563B9A002E5711 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57ABEFEA2A584DAB0034F0BE /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		57ABEFEC2A584DD00034F0BE /* ForecastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewController.swift; sourceTree = "<group>"; };
+		57ABEFEE2A584DED0034F0BE /* PrecipitationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationViewController.swift; sourceTree = "<group>"; };
 		57B5937D2A573747000ADE4D /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		57B5937F2A5737F5000ADE4D /* OnboardingDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDataManager.swift; sourceTree = "<group>"; };
 		57B593852A57728F000ADE4D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +123,7 @@
 		57AADD5D2A563D12002E5711 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				57ABEFE92A584D800034F0BE /* Inherence VC's */,
 				57AADD4B2A563B92002E5711 /* OnboardingViewController.swift */,
 				57B593852A57728F000ADE4D /* MainViewController.swift */,
 			);
@@ -143,6 +150,16 @@
 				57AA5D622A5711C1003EA73D /* UIViewController+ Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		57ABEFE92A584D800034F0BE /* Inherence VC's */ = {
+			isa = PBXGroup;
+			children = (
+				57ABEFEA2A584DAB0034F0BE /* TodayViewController.swift */,
+				57ABEFEC2A584DD00034F0BE /* ForecastViewController.swift */,
+				57ABEFEE2A584DED0034F0BE /* PrecipitationViewController.swift */,
+			);
+			path = "Inherence VC's";
 			sourceTree = "<group>";
 		};
 		57B5937C2A57372B000ADE4D /* Cells */ = {
@@ -232,11 +249,14 @@
 				57AA5D632A5711C2003EA73D /* UIViewController+ Extension.swift in Sources */,
 				57B5937E2A573747000ADE4D /* OnboardingCollectionViewCell.swift in Sources */,
 				57B593802A5737F5000ADE4D /* OnboardingDataManager.swift in Sources */,
+				57ABEFED2A584DD00034F0BE /* ForecastViewController.swift in Sources */,
 				57AADD4A2A563B92002E5711 /* SceneDelegate.swift in Sources */,
 				57AA5D5F2A56EEB1003EA73D /* UIColor+ Extension.swift in Sources */,
 				57AA5D5D2A56E692003EA73D /* UIFont+ Extension.swift in Sources */,
 				57AA5D612A570ED6003EA73D /* Constants.swift in Sources */,
+				57ABEFEF2A584DED0034F0BE /* PrecipitationViewController.swift in Sources */,
 				57B593862A57728F000ADE4D /* MainViewController.swift in Sources */,
+				57ABEFEB2A584DAB0034F0BE /* TodayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
