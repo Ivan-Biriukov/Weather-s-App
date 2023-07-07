@@ -1,6 +1,7 @@
 import Foundation
 
 struct K {
+    
     struct Onboarding {
         static let moonImg = "MoonLogo"
         static let sunImg = "SunLogo"
@@ -22,5 +23,10 @@ struct K {
     
     struct Views {
         static let mainBackground : String = "mainBackground"
+    }
+    
+    struct NavigationBar {
+        static let accountButton : String = "navBarProfileButtonIcon"
+        static let threeDotsButton : String = "navBarThreeDotsIcon"
     }
 }
