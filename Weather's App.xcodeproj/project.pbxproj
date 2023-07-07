@@ -123,9 +123,9 @@
 		57AADD5D2A563D12002E5711 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				57ABEFE92A584D800034F0BE /* Inherence VC's */,
 				57AADD4B2A563B92002E5711 /* OnboardingViewController.swift */,
 				57B593852A57728F000ADE4D /* MainViewController.swift */,
+				57ABEFE92A584D800034F0BE /* Inherence VC's */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
