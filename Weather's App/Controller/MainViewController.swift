@@ -52,6 +52,8 @@ class MainViewController: UIViewController {
         return scroll
     }()
     
+    private let todayView = TodayView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
+    
     // MARK: - LifeCycle Methods
     
     override func viewDidLoad() {
@@ -98,6 +100,7 @@ class MainViewController: UIViewController {
         topLaneButtonsStack.addArrangedSubview(precipitationButton)
         view.addSubview(separateLine)
         view.addSubview(contentView)
+        contentView.addSubview(todayView)
     }
     
     private func addButtonsTargets() {
@@ -134,7 +137,7 @@ class MainViewController: UIViewController {
             separateLine.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             separateLine.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            contentView.topAnchor.constraint(equalTo: separateLine.bottomAnchor, constant: 40),
+            contentView.topAnchor.constraint(equalTo: separateLine.bottomAnchor, constant: 20),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
