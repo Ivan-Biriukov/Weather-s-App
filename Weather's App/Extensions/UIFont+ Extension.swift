@@ -22,6 +22,10 @@ extension UIFont {
         return UIFont(name: "Poppins-Medium", size: 14)
     }
     
+    static func poppinsTemp() -> UIFont?{
+        return UIFont(name: "Poppins-Medium", size: 60)
+    }
+    
     // MARK: - Regular
     
     static func poppinsRegular8() -> UIFont?{
