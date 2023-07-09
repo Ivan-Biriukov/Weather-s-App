@@ -8,6 +8,7 @@ extension UIColor {
     static let customViewsSelectedBackground = UIColor(red: 50/256, green: 51/256, blue: 62/256, alpha: 0.8)
     static let verticalGrayLine = UIColor(red: 89/256, green: 92/256, blue: 102/256, alpha: 1)
     static let verticalBrownLine = UIColor(red: 241/256, green: 178/256, blue: 137/256, alpha: 1)
+    static let additionalViewBackground = UIColor(red: 35/256, green: 36/256, blue: 41/256, alpha: 1)
 
     
     
