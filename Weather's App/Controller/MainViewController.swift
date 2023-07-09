@@ -45,14 +45,21 @@ class MainViewController: UIViewController {
         return line
     }()
     
-    private let contentView : UIScrollView = {
+    private let contentScrollView : UIScrollView = {
         let scroll = UIScrollView()
         scroll.isScrollEnabled = true
         scroll.translatesAutoresizingMaskIntoConstraints = false
         return scroll
     }()
     
-    private let todayView = TodayView(frame: CGRect(x: 0, y: 0, width: 400, height: 600))
+    private let contentStackView : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let todayView = TodayView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1500))
     
     // MARK: - LifeCycle Methods
     
@@ -65,6 +72,7 @@ class MainViewController: UIViewController {
         setupNavBar()
         configureSearchBar()
         hideKeyboardWhenTappedAround()
+        contentScrollView.delegate = self
     }
     
 
@@ -99,8 +107,8 @@ class MainViewController: UIViewController {
         topLaneButtonsStack.addArrangedSubview(forecastButton)
         topLaneButtonsStack.addArrangedSubview(precipitationButton)
         view.addSubview(separateLine)
-        view.addSubview(contentView)
-        contentView.addSubview(todayView)
+        view.addSubview(contentScrollView)
+        contentScrollView.addSubview(todayView)
     }
     
     private func addButtonsTargets() {
@@ -137,10 +145,17 @@ class MainViewController: UIViewController {
             separateLine.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             separateLine.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            contentView.topAnchor.constraint(equalTo: separateLine.bottomAnchor, constant: 20),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentScrollView.topAnchor.constraint(equalTo: separateLine.bottomAnchor, constant: 20),
+            contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            
+
         ])
     }
 }
@@ -153,5 +168,10 @@ extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
+}
+
+// MARK: - ScrollView Delegate
+
+extension MainViewController: UIScrollViewDelegate {
     
 }

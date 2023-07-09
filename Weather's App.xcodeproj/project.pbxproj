@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		579FDCA72A5B241A006362DD /* DailyWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579FDCA62A5B241A006362DD /* DailyWeatherTableViewCell.swift */; };
+		579FDCA92A5B7664006362DD /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579FDCA82A5B7664006362DD /* CircularProgressView.swift */; };
 		57A32F482A598ACD008C2D24 /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A32F472A598ACD008C2D24 /* GradientLabel.swift */; };
 		57A32F4A2A5A0A1D008C2D24 /* UIVIew+ Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A32F492A5A0A1D008C2D24 /* UIVIew+ Extension.swift */; };
 		57A32F4D2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A32F4C2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		579FDCA62A5B241A006362DD /* DailyWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherTableViewCell.swift; sourceTree = "<group>"; };
+		579FDCA82A5B7664006362DD /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		57A32F472A598ACD008C2D24 /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		57A32F492A5A0A1D008C2D24 /* UIVIew+ Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+ Extension.swift"; sourceTree = "<group>"; };
 		57A32F4C2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheaterHourlyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -131,6 +135,7 @@
 				57B5937C2A57372B000ADE4D /* Cells */,
 				57AADD522A563B9A002E5711 /* LaunchScreen.storyboard */,
 				57A32F472A598ACD008C2D24 /* GradientLabel.swift */,
+				579FDCA82A5B7664006362DD /* CircularProgressView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 			children = (
 				57B5937D2A573747000ADE4D /* OnboardingCollectionViewCell.swift */,
 				57A32F4C2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift */,
+				579FDCA62A5B241A006362DD /* DailyWeatherTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -258,12 +264,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				579FDCA72A5B241A006362DD /* DailyWeatherTableViewCell.swift in Sources */,
 				57A32F482A598ACD008C2D24 /* GradientLabel.swift in Sources */,
 				57AADD4C2A563B92002E5711 /* OnboardingViewController.swift in Sources */,
 				57ABEFF22A585B2F0034F0BE /* SectionButton.swift in Sources */,
 				57AADD482A563B92002E5711 /* AppDelegate.swift in Sources */,
 				57AA5D632A5711C2003EA73D /* UIViewController+ Extension.swift in Sources */,
 				57B5937E2A573747000ADE4D /* OnboardingCollectionViewCell.swift in Sources */,
+				579FDCA92A5B7664006362DD /* CircularProgressView.swift in Sources */,
 				57B593802A5737F5000ADE4D /* OnboardingDataManager.swift in Sources */,
 				57AADD4A2A563B92002E5711 /* SceneDelegate.swift in Sources */,
 				57AA5D5F2A56EEB1003EA73D /* UIColor+ Extension.swift in Sources */,

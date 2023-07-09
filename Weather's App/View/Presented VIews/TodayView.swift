@@ -246,6 +246,281 @@ class TodayView: UIView {
         return c
     }()
     
+                                // Daily Temp Table Section
+    
+    private let dailyTepmTable : UITableView = {
+        let table = UITableView()
+        table.backgroundColor = .additionalViewBackground
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.clipsToBounds = false
+        table.layer.masksToBounds = false
+        table.layer.shadowColor = UIColor.white.cgColor
+        table.layer.shadowOffset = CGSize(width: 0, height: 5)
+        table.layer.shadowRadius = 5.0
+        table.layer.shadowOpacity = 0.5
+        table.layer.cornerRadius = 10
+        return table
+    }()
+    
+    
+                                // Details Section
+    
+    private let detailsContainer : UIView = {
+        let view = UIView()
+        view.backgroundColor = .additionalViewBackground
+        view.clipsToBounds = false
+        view.layer.masksToBounds = false
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 5)
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.5
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let detailMainTitle : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsSemiBold14()
+        lb.textColor = .white
+        lb.textAlignment = .left
+        lb.text = "Details"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailWeatherConditionImg : UIImageView = {
+        let img = UIImageView(image: UIImage(named: K.WheatherConditionsImages.clouds))
+        img.contentMode = .scaleAspectFill
+        img.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        img.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        img.translatesAutoresizingMaskIntoConstraints = false
+        return img
+    }()
+    
+    private let detailFeelsLikeLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsRegular12()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "Feels like"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailFeelsLikeValueLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsMedium12()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "76°"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailsFirstLaneStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.spacing = 35
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let detailHumidityLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsRegular12()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "Humidity"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailHumidityValueLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsMedium12()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "63%"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailsSecondLaneStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.spacing = 35
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let detailVisibilityLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsRegular12()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "Visibility"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailVisibilityValueLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsMedium12()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "10 mi"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailsThirdLaneStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.spacing = 35
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let detailUVIndexLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsRegular12()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "UV Index"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailUVIndexValueLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsMedium12()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "Low 0"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailsFourthLaneStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.spacing = 35
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    
+    private let detailDewpointLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsRegular12()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "Dew point"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailDewpointValueLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsMedium12()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "56°"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let detailsFifthLaneStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.spacing = 35
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let detailsMainRightStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .center
+        stack.spacing = 15
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let detailDescriptionLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsRegular10()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .left
+        lb.numberOfLines = 0
+        lb.text = "Tonight - Clear. Winds from SW to SSW at 10 to 11 mph (16.1 to 17.7 kph). The overnight low will be 69° F (20.0 ° C)"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+                                    // Air Quelity Section
+    
+    private let airQuelityContainer : UIView = {
+        let view = UIView()
+        view.backgroundColor = .additionalViewBackground
+        view.clipsToBounds = false
+        view.layer.masksToBounds = false
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 5)
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.5
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let airQuelityMainTitle : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsSemiBold14()
+        lb.textColor = .white
+        lb.textAlignment = .left
+        lb.text = "Air Quality"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private lazy var airQuelityInfoButton : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "info.circle"), for: .normal)
+        btn.tintColor = .white
+        btn.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        btn.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    private let airQuelityTitleStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let airQuelityProgressView = CircularProgressView()
+    
+    private let airQuelityComentLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsLight10()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .left
+        lb.text = "You have good air quality - enjoy your outdoor activities."
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -255,6 +530,7 @@ class TodayView: UIView {
         setupDifferentColorsForLabels()
         addDashedBorder(startX: 15, startY: 220, endX: Int(self.bounds.width) - 20, endY: 220)
         setupCollection()
+        setupTableView()
     }
     
     required init?(coder: NSCoder) {
@@ -290,6 +566,28 @@ class TodayView: UIView {
         sunsetStack.addArrangedSubview(sunsetImg)
         sunsetStack.addArrangedSubview(sunsetLabel)
         addSubview(hourlyWheaterCollection)
+        addSubview(dailyTepmTable)
+        addSubview(detailsContainer)
+        detailsContainer.addSubview(detailMainTitle)
+        detailsContainer.addSubview(detailWeatherConditionImg)
+        detailsContainer.addSubview(detailsMainRightStack)
+        detailsMainRightStack.addArrangedSubview(detailsFirstLaneStack)
+        detailsFirstLaneStack.addArrangedSubview(detailFeelsLikeLabel)
+        detailsFirstLaneStack.addArrangedSubview(detailFeelsLikeValueLabel)
+        detailsMainRightStack.addArrangedSubview(detailsSecondLaneStack)
+        detailsSecondLaneStack.addArrangedSubview(detailHumidityLabel)
+        detailsSecondLaneStack.addArrangedSubview(detailHumidityValueLabel)
+        detailsMainRightStack.addArrangedSubview(detailsThirdLaneStack)
+        detailsThirdLaneStack.addArrangedSubview(detailVisibilityLabel)
+        detailsThirdLaneStack.addArrangedSubview(detailVisibilityValueLabel)
+        detailsMainRightStack.addArrangedSubview(detailsFourthLaneStack)
+        detailsFourthLaneStack.addArrangedSubview(detailUVIndexLabel)
+        detailsFourthLaneStack.addArrangedSubview(detailUVIndexValueLabel)
+        detailsMainRightStack.addArrangedSubview(detailsFifthLaneStack)
+        detailsFifthLaneStack.addArrangedSubview(detailDewpointLabel)
+        detailsFifthLaneStack.addArrangedSubview(detailDewpointValueLabel)
+        detailsContainer.addSubview(detailDescriptionLabel)
+
     }
     
     private func setupConstraints() {
@@ -320,6 +618,28 @@ class TodayView: UIView {
             hourlyWheaterCollection.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14),
             hourlyWheaterCollection.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -15),
             
+            dailyTepmTable.topAnchor.constraint(equalTo: hourlyWheaterCollection.bottomAnchor, constant: 30),
+            dailyTepmTable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            dailyTepmTable.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            dailyTepmTable.heightAnchor.constraint(equalToConstant: 320),
+            
+            detailsContainer.topAnchor.constraint(equalTo: dailyTepmTable.bottomAnchor, constant: 20),
+            detailsContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            detailsContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            detailsContainer.heightAnchor.constraint(equalToConstant: 300),
+            
+            detailMainTitle.topAnchor.constraint(equalTo: detailsContainer.topAnchor, constant: 10),
+            detailMainTitle.leadingAnchor.constraint(equalTo: detailsContainer.leadingAnchor, constant: 22),
+            
+            detailWeatherConditionImg.topAnchor.constraint(equalTo: detailMainTitle.bottomAnchor, constant: 32),
+            detailWeatherConditionImg.leadingAnchor.constraint(equalTo: detailsContainer.leadingAnchor, constant: 22),
+            detailsMainRightStack.topAnchor.constraint(equalTo: detailsContainer.topAnchor, constant: 36),
+            detailsMainRightStack.leadingAnchor.constraint(equalTo: detailWeatherConditionImg.trailingAnchor, constant: 70),
+            detailsMainRightStack.trailingAnchor.constraint(equalTo: detailsContainer.trailingAnchor, constant: -25),
+            
+            detailDescriptionLabel.leadingAnchor.constraint(equalTo: detailsContainer.leadingAnchor, constant: 25),
+            detailDescriptionLabel.trailingAnchor.constraint(equalTo: detailsContainer.trailingAnchor, constant: -25),
+            detailDescriptionLabel.topAnchor.constraint(equalTo: detailsMainRightStack.bottomAnchor, constant: 40),
         ])
     }
     
@@ -336,6 +656,13 @@ class TodayView: UIView {
         hourlyWheaterCollection.delegate = self
         hourlyWheaterCollection.dataSource = self
         hourlyWheaterCollection.register(WheaterHourlyCollectionViewCell.self, forCellWithReuseIdentifier: "HourleWheaterCell")
+    }
+    
+    private func setupTableView() {
+        dailyTepmTable.delegate = self
+        dailyTepmTable.dataSource = self
+        dailyTepmTable.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: "dailyTempTableCell")
+        dailyTepmTable.register(DailyWeatherTableViewFirstIndexCell.self, forCellReuseIdentifier: "firstIndexCell")
     }
 }
     
@@ -354,7 +681,35 @@ extension TodayView : UICollectionViewDelegate, UICollectionViewDataSource {
         
         return cell
     }
+}
+
+// MARK: - TableView Delegate & DataSource
+
+extension TodayView : UITableViewDelegate, UITableViewDataSource {
     
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.row == 0 {
+            let cell = dailyTepmTable.dequeueReusableCell(withIdentifier: "firstIndexCell", for: indexPath)
+            cell.selectionStyle = .none
+            return cell
+        } else {
+            
+            let cell = dailyTepmTable.dequeueReusableCell(withIdentifier: "dailyTempTableCell", for: indexPath) as! DailyWeatherTableViewCell
+            cell.selectionStyle = .none
+            return cell
+        }
+
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
     
 }
 
