@@ -60,6 +60,7 @@ class MainViewController: UIViewController {
     }()
     
     private let todayView = TodayView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1500))
+    private let forecastView = ForecastView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 600))
     
     // MARK: - LifeCycle Methods
     
@@ -73,6 +74,9 @@ class MainViewController: UIViewController {
         configureSearchBar()
         hideKeyboardWhenTappedAround()
         contentScrollView.delegate = self
+        
+        
+        todayView.isHidden = true
     }
     
 
@@ -109,6 +113,7 @@ class MainViewController: UIViewController {
         view.addSubview(separateLine)
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(todayView)
+        contentScrollView.addSubview(forecastView)
     }
     
     private func addButtonsTargets() {
@@ -150,11 +155,15 @@ class MainViewController: UIViewController {
             contentScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
-            todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
-            todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+//            todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+//            todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+//            todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+//            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
             
+            forecastView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            forecastView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            forecastView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            forecastView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
 
         ])
     }
