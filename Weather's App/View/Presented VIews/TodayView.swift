@@ -509,17 +509,176 @@ class TodayView: UIView {
         return stack
     }()
     
-    private let airQuelityProgressView = CircularProgressView()
+    private let airQuelityProgressView = CircularProgressView(frame: CGRect(x: 0, y: 0, width: 110, height: 110),lineWidth: 5, rounded: true)
+    
+    private let airQuelityProgressMinValue : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsRegular8()
+        lb.textColor = .darkGrayText
+        lb.textAlignment = .left
+        lb.text = "0"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let airQuelityProgressMaxValue : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsRegular8()
+        lb.textColor = .darkGrayText
+        lb.textAlignment = .left
+        lb.text = "500"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let airQuelityCurrentIndexValue : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsSemiBold28()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "43"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
     
     private let airQuelityComentLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsLight10()
         lb.textColor = .lightGrayText
         lb.textAlignment = .left
+        lb.numberOfLines = 0
         lb.text = "You have good air quality - enjoy your outdoor activities."
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
+    
+    private let usEpaAqiLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsLight10()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "US EPA AQI"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let dominantPollutantLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsLight10()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "Dominant pollutan"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let airQuelityBottomStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+                                    // Sun & Moon Phases
+    
+    private let sunPhasesContainer : UIView = {
+        let view = UIView()
+        view.backgroundColor = .additionalViewBackground
+        view.clipsToBounds = false
+        view.layer.masksToBounds = false
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 5)
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.5
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let sunPhasesTitleLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsSemiBold14()
+        lb.textColor = .white
+        lb.textAlignment = .left
+        lb.text = "Sun & Moon"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let sunPhasesSunriseLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsLight10()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "Sunrise"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let sunPhasesSunriseValueLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsMedium12()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "05:57 AM"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let sunRiseVerticalStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .center
+        stack.spacing = 10
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    
+    private let sunPhasesSunsetLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsLight10()
+        lb.textColor = .lightGrayText
+        lb.textAlignment = .center
+        lb.text = "Sunset"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let sunPhasesSunsetValueLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsMedium12()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "06:12 PM"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let sunSetVerticalStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .center
+        stack.spacing = 10
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let sunMoonWayView = sunWayView(frame: CGRect(x: 0, y: 0, width: 110, height: 110),lineWidth: 5, rounded: true)
+    
+    private let currentTimeValueLabel : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsSemiBold28()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "14:58"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
     
     // MARK: - Init
 
@@ -531,6 +690,10 @@ class TodayView: UIView {
         addDashedBorder(startX: 15, startY: 220, endX: Int(self.bounds.width) - 20, endY: 220)
         setupCollection()
         setupTableView()
+        airQuelityProgressView.translatesAutoresizingMaskIntoConstraints = false
+        setupairQuelityProgressView()
+        airQuelityContainer.addDashedBorder(startX: 15, startY: 150, endX: Int(self.bounds.width) - 35, endY: 150)
+        setupSunMoonWayView()
     }
     
     required init?(coder: NSCoder) {
@@ -587,6 +750,29 @@ class TodayView: UIView {
         detailsFifthLaneStack.addArrangedSubview(detailDewpointLabel)
         detailsFifthLaneStack.addArrangedSubview(detailDewpointValueLabel)
         detailsContainer.addSubview(detailDescriptionLabel)
+        addSubview(airQuelityContainer)
+        airQuelityContainer.addSubview(airQuelityTitleStack)
+        airQuelityTitleStack.addArrangedSubview(airQuelityMainTitle)
+        airQuelityTitleStack.addArrangedSubview(airQuelityInfoButton)
+        airQuelityContainer.addSubview(airQuelityProgressView)
+        airQuelityContainer.addSubview(airQuelityProgressMinValue)
+        airQuelityContainer.addSubview(airQuelityProgressMaxValue)
+        airQuelityContainer.addSubview(airQuelityCurrentIndexValue)
+        airQuelityContainer.addSubview(airQuelityComentLabel)
+        airQuelityContainer.addSubview(airQuelityBottomStack)
+        airQuelityBottomStack.addArrangedSubview(usEpaAqiLabel)
+        airQuelityBottomStack.addArrangedSubview(dominantPollutantLabel)
+        
+        addSubview(sunPhasesContainer)
+        sunPhasesContainer.addSubview(sunPhasesTitleLabel)
+        sunPhasesContainer.addSubview(sunRiseVerticalStack)
+        sunRiseVerticalStack.addArrangedSubview(sunPhasesSunriseValueLabel)
+        sunRiseVerticalStack.addArrangedSubview(sunPhasesSunriseLabel)
+        sunPhasesContainer.addSubview(sunSetVerticalStack)
+        sunSetVerticalStack.addArrangedSubview(sunPhasesSunsetValueLabel)
+        sunSetVerticalStack.addArrangedSubview(sunPhasesSunsetLabel)
+        sunPhasesContainer.addSubview(sunMoonWayView)
+        sunPhasesContainer.addSubview(currentTimeValueLabel)
 
     }
     
@@ -640,6 +826,49 @@ class TodayView: UIView {
             detailDescriptionLabel.leadingAnchor.constraint(equalTo: detailsContainer.leadingAnchor, constant: 25),
             detailDescriptionLabel.trailingAnchor.constraint(equalTo: detailsContainer.trailingAnchor, constant: -25),
             detailDescriptionLabel.topAnchor.constraint(equalTo: detailsMainRightStack.bottomAnchor, constant: 40),
+            
+            airQuelityContainer.heightAnchor.constraint(equalToConstant: 200),
+            airQuelityContainer.topAnchor.constraint(equalTo: detailsContainer.bottomAnchor, constant: 20),
+            airQuelityContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            airQuelityContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            airQuelityTitleStack.topAnchor.constraint(equalTo: airQuelityContainer.topAnchor, constant: 10),
+            airQuelityTitleStack.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 22),
+            airQuelityTitleStack.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -22),
+            airQuelityProgressView.topAnchor.constraint(equalTo: airQuelityTitleStack.bottomAnchor, constant: 18),
+            airQuelityProgressView.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 22),
+            
+            airQuelityProgressMinValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 80),
+            airQuelityProgressMinValue.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 30),
+            airQuelityProgressMaxValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 80),
+            airQuelityProgressMaxValue.leadingAnchor.constraint(equalTo: airQuelityProgressMinValue.trailingAnchor, constant: 72.5),
+            airQuelityCurrentIndexValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 17),
+            airQuelityCurrentIndexValue.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 57),
+            airQuelityComentLabel.topAnchor.constraint(equalTo: airQuelityTitleStack.bottomAnchor, constant: 51),
+            airQuelityComentLabel.leadingAnchor.constraint(equalTo: airQuelityProgressMaxValue.trailingAnchor, constant: 25),
+            airQuelityComentLabel.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -20),
+            airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: -14),
+            airQuelityBottomStack.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 18),
+            airQuelityBottomStack.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -18),
+            
+            sunPhasesContainer.topAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: 20),
+            sunPhasesContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            sunPhasesContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            sunPhasesContainer.heightAnchor.constraint(equalToConstant: 180),
+            sunPhasesTitleLabel.topAnchor.constraint(equalTo: sunPhasesContainer.topAnchor, constant: 10),
+            sunPhasesTitleLabel.leadingAnchor.constraint(equalTo: sunPhasesContainer.leadingAnchor, constant: 22),
+            
+            sunRiseVerticalStack.bottomAnchor.constraint(equalTo: sunPhasesContainer.bottomAnchor, constant: -50),
+            sunRiseVerticalStack.leadingAnchor.constraint(equalTo: sunPhasesContainer.leadingAnchor, constant: 22),
+            
+            sunSetVerticalStack.bottomAnchor.constraint(equalTo: sunPhasesContainer.bottomAnchor, constant: -50),
+            sunSetVerticalStack.trailingAnchor.constraint(equalTo: sunPhasesContainer.trailingAnchor, constant: -22),
+            
+            sunMoonWayView.topAnchor.constraint(equalTo: sunPhasesContainer.topAnchor, constant: 41),
+            sunMoonWayView.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 45),
+            
+            currentTimeValueLabel.topAnchor.constraint(equalTo: sunPhasesContainer.topAnchor, constant: 70),
+            currentTimeValueLabel.centerXAnchor.constraint(equalTo: sunPhasesContainer.centerXAnchor),
+
         ])
     }
     
@@ -650,6 +879,8 @@ class TodayView: UIView {
         feelsLikeAtributtedString(forLAbel: humidityLabel, grayText: "Humidity: ", whiteText: "59%")
         feelsLikeAtributtedString(forLAbel: windLabel, grayText: "Wind: ", whiteText: "10 km/h")
         feelsLikeAtributtedString(forLAbel: sunsetLabel, grayText: "Sunset: ", whiteText: "18:34")
+        feelsLikeAtributtedString(forLAbel: usEpaAqiLabel, grayText: "US EPA AQI ", whiteText: " 49/500")
+        feelsLikeAtributtedString(forLAbel: dominantPollutantLabel, grayText: "Dominant pollutant ", whiteText: " PM 10")
     }
     
     private func setupCollection() {
@@ -664,6 +895,27 @@ class TodayView: UIView {
         dailyTepmTable.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: "dailyTempTableCell")
         dailyTepmTable.register(DailyWeatherTableViewFirstIndexCell.self, forCellReuseIdentifier: "firstIndexCell")
     }
+    
+    private func setupairQuelityProgressView() {
+        airQuelityProgressView.progress = 0.8
+
+        if airQuelityProgressView.progress <= 0.30 {
+            airQuelityProgressView.progressColor = .green
+        } else if airQuelityProgressView.progress <= 0.50 {
+            airQuelityProgressView.progressColor = .yellow
+        } else if airQuelityProgressView.progress > 0.50{
+            airQuelityProgressView.progressColor = .red
+        }
+        airQuelityProgressView.trackColor = .lightGray
+    }
+    
+    private func setupSunMoonWayView() {
+        sunMoonWayView.progress = 0.4
+        sunMoonWayView.progressColor = .black
+        sunMoonWayView.trackColor = .systemYellow
+        sunMoonWayView.translatesAutoresizingMaskIntoConstraints = false
+    }
+
 }
     
 
