@@ -12,6 +12,8 @@
 		57A32F482A598ACD008C2D24 /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A32F472A598ACD008C2D24 /* GradientLabel.swift */; };
 		57A32F4A2A5A0A1D008C2D24 /* UIVIew+ Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A32F492A5A0A1D008C2D24 /* UIVIew+ Extension.swift */; };
 		57A32F4D2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A32F4C2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift */; };
+		57A3D7752A5C689400EDA4AE /* ForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D7742A5C689400EDA4AE /* ForecastCollectionViewCell.swift */; };
+		57A3D7772A5CB08400EDA4AE /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D7762A5CB08400EDA4AE /* ForecastTableViewCell.swift */; };
 		57AA5D552A56E511003EA73D /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57AA5D542A56E511003EA73D /* Poppins-SemiBold.ttf */; };
 		57AA5D572A56E521003EA73D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57AA5D562A56E521003EA73D /* Poppins-Regular.ttf */; };
 		57AA5D592A56E539003EA73D /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57AA5D582A56E539003EA73D /* Poppins-Medium.ttf */; };
@@ -30,6 +32,7 @@
 		57B593802A5737F5000ADE4D /* OnboardingDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5937F2A5737F5000ADE4D /* OnboardingDataManager.swift */; };
 		57B593862A57728F000ADE4D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B593852A57728F000ADE4D /* MainViewController.swift */; };
 		57C2B2D42A58C96D00768DE3 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C2B2D32A58C96D00768DE3 /* TodayView.swift */; };
+		57C930082A5C5D5E00BF0310 /* ForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C930072A5C5D5E00BF0310 /* ForecastView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,8 @@
 		57A32F472A598ACD008C2D24 /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		57A32F492A5A0A1D008C2D24 /* UIVIew+ Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+ Extension.swift"; sourceTree = "<group>"; };
 		57A32F4C2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheaterHourlyCollectionViewCell.swift; sourceTree = "<group>"; };
+		57A3D7742A5C689400EDA4AE /* ForecastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCollectionViewCell.swift; sourceTree = "<group>"; };
+		57A3D7762A5CB08400EDA4AE /* ForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastTableViewCell.swift; sourceTree = "<group>"; };
 		57AA5D542A56E511003EA73D /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		57AA5D562A56E521003EA73D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		57AA5D582A56E539003EA73D /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
@@ -58,6 +63,7 @@
 		57B5937F2A5737F5000ADE4D /* OnboardingDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDataManager.swift; sourceTree = "<group>"; };
 		57B593852A57728F000ADE4D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		57C2B2D32A58C96D00768DE3 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		57C930072A5C5D5E00BF0310 /* ForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				57C2B2D32A58C96D00768DE3 /* TodayView.swift */,
+				57C930072A5C5D5E00BF0310 /* ForecastView.swift */,
 			);
 			path = "Presented VIews";
 			sourceTree = "<group>";
@@ -186,6 +193,8 @@
 				57B5937D2A573747000ADE4D /* OnboardingCollectionViewCell.swift */,
 				57A32F4C2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift */,
 				579FDCA62A5B241A006362DD /* DailyWeatherTableViewCell.swift */,
+				57A3D7742A5C689400EDA4AE /* ForecastCollectionViewCell.swift */,
+				57A3D7762A5CB08400EDA4AE /* ForecastTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -267,8 +276,10 @@
 				579FDCA72A5B241A006362DD /* DailyWeatherTableViewCell.swift in Sources */,
 				57A32F482A598ACD008C2D24 /* GradientLabel.swift in Sources */,
 				57AADD4C2A563B92002E5711 /* OnboardingViewController.swift in Sources */,
+				57A3D7752A5C689400EDA4AE /* ForecastCollectionViewCell.swift in Sources */,
 				57ABEFF22A585B2F0034F0BE /* SectionButton.swift in Sources */,
 				57AADD482A563B92002E5711 /* AppDelegate.swift in Sources */,
+				57C930082A5C5D5E00BF0310 /* ForecastView.swift in Sources */,
 				57AA5D632A5711C2003EA73D /* UIViewController+ Extension.swift in Sources */,
 				57B5937E2A573747000ADE4D /* OnboardingCollectionViewCell.swift in Sources */,
 				579FDCA92A5B7664006362DD /* CircularProgressView.swift in Sources */,
@@ -278,6 +289,7 @@
 				57AA5D5D2A56E692003EA73D /* UIFont+ Extension.swift in Sources */,
 				57AA5D612A570ED6003EA73D /* Constants.swift in Sources */,
 				57A32F4D2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift in Sources */,
+				57A3D7772A5CB08400EDA4AE /* ForecastTableViewCell.swift in Sources */,
 				57A32F4A2A5A0A1D008C2D24 /* UIVIew+ Extension.swift in Sources */,
 				57C2B2D42A58C96D00768DE3 /* TodayView.swift in Sources */,
 				57B593862A57728F000ADE4D /* MainViewController.swift in Sources */,
