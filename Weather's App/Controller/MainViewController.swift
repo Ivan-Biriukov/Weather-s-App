@@ -1,4 +1,5 @@
 import UIKit
+import BonsaiController
 
 class MainViewController: UIViewController {
     
@@ -80,16 +81,14 @@ class MainViewController: UIViewController {
         forecastView.isHidden = true
         todayView.isHidden = true
     }
-    
 
     
     // MARK: - Custom Buttons Methods
     
     @objc func accountButtonTaped() {
         let popupVC = PopupViewController()
-        popupVC.modalPresentationStyle = .overCurrentContext
-        popupVC.providesPresentationContextTransitionStyle = true
-        popupVC.definesPresentationContext = true
+        popupVC.transitioningDelegate = self
+        popupVC.modalPresentationStyle = .custom
         self.present(popupVC, animated: true)
     }
     
@@ -198,4 +197,21 @@ extension MainViewController: UISearchBarDelegate {
 
 extension MainViewController: UIScrollViewDelegate {
     
+}
+
+
+// MARK: - Bonsai Delegate
+
+extension MainViewController: BonsaiControllerDelegate {
+    
+    // return the frame of your Bonsai View Controller
+    func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
+        return CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: containerViewFrame.width - 80, height: containerViewFrame.height ))
+    }
+    
+    // return a Bonsai Controller with SlideIn or Bubble transition animator
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    
+        return BonsaiController(fromDirection: .left, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
+    }
 }

@@ -4,6 +4,11 @@ import UIKit
 
 class PopupViewController: UIViewController {
     
+    private let notificationDataArra : [[String]] = [
+        ["Send feedback", "Rate this app", "Share your weather"],
+        ["arrowshape.turn.up.backward.fill", "star.fill", "circle.hexagonpath.fill"]
+    ]
+    
     private lazy var dismissButton : UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "xmark.seal.fill"), for: .normal)
@@ -26,6 +31,53 @@ class PopupViewController: UIViewController {
         return lb
     }()
     
+    private let topTableSeparate : UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGrayText
+        view.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let locationsTableView : UITableView = {
+        let table = UITableView()
+        table.backgroundColor = .clear
+        table.showsVerticalScrollIndicator = true
+        table.separatorStyle = .none
+        table.indicatorStyle = .white
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+    
+    private let botTableSeparate : UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGrayText
+        view.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let toolsTitle : UILabel = {
+        let lb = UILabel()
+        lb.font = .poppinsSemiBold16()
+        lb.textColor = .white
+        lb.textAlignment = .center
+        lb.text = "Tools"
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    private let notificationsTableView : UITableView = {
+        let table = UITableView()
+        table.backgroundColor = .clear
+        table.showsVerticalScrollIndicator = true
+        table.separatorStyle = .none
+        table.isScrollEnabled = false
+        table.indicatorStyle = .white
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+    
     // MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
@@ -33,6 +85,7 @@ class PopupViewController: UIViewController {
         view.backgroundColor = .additionalViewBackground
         addSubviews()
         setupConstraints()
+        setupTableView()
     }
     
     
@@ -41,16 +94,50 @@ class PopupViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(dismissButton)
         view.addSubview(locationTitle)
+        view.addSubview(topTableSeparate)
+        view.addSubview(locationsTableView)
+        view.addSubview(botTableSeparate)
+        view.addSubview(toolsTitle)
+        view.addSubview(notificationsTableView)
+    }
+    
+    private func setupTableView() {
+        locationsTableView.delegate = self
+        locationsTableView.dataSource = self
+        locationsTableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "LocationTableViewCell")
+        notificationsTableView.delegate = self
+        notificationsTableView.dataSource = self
+        notificationsTableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: "NotificationTableViewCell")
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            dismissButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            dismissButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            dismissButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
+            dismissButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35),
             
-            locationTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
-            locationTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
+            locationTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            locationTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            topTableSeparate.topAnchor.constraint(equalTo: locationTitle.bottomAnchor, constant: 10),
+            topTableSeparate.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            topTableSeparate.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            
+            locationsTableView.topAnchor.constraint(equalTo: topTableSeparate.bottomAnchor, constant: 10),
+            locationsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            locationsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            locationsTableView.heightAnchor.constraint(equalToConstant: 200),
         
+            botTableSeparate.topAnchor.constraint(equalTo: locationsTableView.bottomAnchor, constant: 10),
+            botTableSeparate.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            botTableSeparate.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            
+            toolsTitle.topAnchor.constraint(equalTo: botTableSeparate.bottomAnchor, constant: 20),
+            toolsTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
+            
+            notificationsTableView.topAnchor.constraint(equalTo: toolsTitle.bottomAnchor, constant: 10),
+            notificationsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            notificationsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            notificationsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
         ])
     }
     
@@ -60,4 +147,40 @@ class PopupViewController: UIViewController {
         dismiss(animated: true)
     }
 
+}
+
+// MARK: - TableView Delegate & DataSource
+
+extension PopupViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == locationsTableView {
+            return 2
+        } else {
+            return 3
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if tableView == locationsTableView{
+            let cell = locationsTableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
+            
+            return cell
+        } else {
+            let cell = notificationsTableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
+            let currenttitle = notificationDataArra[0][indexPath.row]
+            let currentImage = notificationDataArra[1][indexPath.row]
+            cell.titleLabel.text = currenttitle
+            cell.image.image = UIImage(systemName: currentImage)
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 65
+    }
+    
+    
 }
