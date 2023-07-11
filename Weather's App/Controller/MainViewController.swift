@@ -61,6 +61,7 @@ class MainViewController: UIViewController {
     
     private let todayView = TodayView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1500))
     private let forecastView = ForecastView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 625))
+    private let precipitationView = PrecipitationView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 625))
     
     // MARK: - LifeCycle Methods
     
@@ -75,7 +76,7 @@ class MainViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         contentScrollView.delegate = self
         
-        
+        forecastView.isHidden = true
         todayView.isHidden = true
     }
     
@@ -114,6 +115,7 @@ class MainViewController: UIViewController {
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(todayView)
         contentScrollView.addSubview(forecastView)
+        contentScrollView.addSubview(precipitationView)
     }
     
     private func addButtonsTargets() {
@@ -160,11 +162,15 @@ class MainViewController: UIViewController {
 //            todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
 //            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
             
-            forecastView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
-            forecastView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
-            forecastView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-            forecastView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
-
+//            forecastView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+//            forecastView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+//            forecastView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+//            forecastView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            
+            precipitationView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            precipitationView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            precipitationView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            precipitationView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
         ])
     }
 }
