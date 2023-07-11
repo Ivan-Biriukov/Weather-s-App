@@ -60,7 +60,7 @@ class MainViewController: UIViewController {
     }()
     
     private let todayView = TodayView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1500))
-    private let forecastView = ForecastView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 600))
+    private let forecastView = ForecastView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 625))
     
     // MARK: - LifeCycle Methods
     
