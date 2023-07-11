@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     private lazy var accountButton : UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: K.NavigationBar.accountButton)!, for: .normal)
+        btn.addTarget(self, action: #selector(accountButtonTaped), for: .touchUpInside)
         btn.tintColor = .white
         return btn
     }()
@@ -83,6 +84,14 @@ class MainViewController: UIViewController {
 
     
     // MARK: - Custom Buttons Methods
+    
+    @objc func accountButtonTaped() {
+        let popupVC = PopupViewController()
+        popupVC.modalPresentationStyle = .overCurrentContext
+        popupVC.providesPresentationContextTransitionStyle = true
+        popupVC.definesPresentationContext = true
+        self.present(popupVC, animated: true)
+    }
     
     @objc func todayButtonTaped(_ sender: UIButton) {
         changeButtonsTitleStyle(titleText: "Today", button: sender, selected: true)
