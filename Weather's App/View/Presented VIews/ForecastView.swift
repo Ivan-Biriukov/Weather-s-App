@@ -2,7 +2,10 @@ import UIKit
 
 class ForecastView: UIView {
     
-    private var sectionNamesArray : [String] = ["This Week", "Next Week", "This Mounth"]
+    private var sectionNamesArray : [String] = ["Next Week", "Next Two Weeks", "Mounth"]
+    
+    var sectionNameValue = 0
+    var countofTableResults = 7
 
     // MARK: - UI Elements
     
@@ -23,7 +26,7 @@ class ForecastView: UIView {
         btn.setTitle("Next Week", for: .normal)
         btn.titleLabel?.font = .poppinsMedium12()
         btn.addTarget(self, action: #selector(nextWeekButtonTaped), for: .touchUpInside)
-        btn.setTitleColor(.lightGrayText, for: .normal)
+        btn.setTitleColor(.white, for: .normal)
         return btn
     }()
     
@@ -100,11 +103,44 @@ class ForecastView: UIView {
     
     // MARK: - Buttons Methods
     
-    @objc func nextWeekButtonTaped() {}
+    @objc func nextWeekButtonTaped() {
+        nextWeekButton.setTitleColor(.white, for: .normal)
+        nextMonthButton.setTitleColor(.lightGrayText, for: .normal)
+        nextTwoWeeksButton.setTitleColor(.lightGrayText, for: .normal)
+         sectionNameValue = 0
+         countofTableResults = 7
+        
+        DispatchQueue.main.async {
+            self.forecastTableView.reloadData()
+            self.forecastTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+    }
     
-    @objc func nextTwoWeeksButtonTaped() {}
+    @objc func nextTwoWeeksButtonTaped() {
+        nextTwoWeeksButton.setTitleColor(.white, for: .normal)
+        nextWeekButton.setTitleColor(.lightGrayText, for: .normal)
+        nextMonthButton.setTitleColor(.lightGrayText, for: .normal)
+        sectionNameValue = 1
+        countofTableResults = 14
+       
+       DispatchQueue.main.async {
+           self.forecastTableView.reloadData()
+           self.forecastTableView.scrollToRow(at: IndexPath(row: 8, section: 0), at: .top, animated: true)
+       }
+    }
     
-    @objc func nextMonthButtonTaped() {}
+    @objc func nextMonthButtonTaped() {
+        nextTwoWeeksButton.setTitleColor(.lightGrayText, for: .normal)
+        nextWeekButton.setTitleColor(.lightGrayText, for: .normal)
+        nextMonthButton.setTitleColor(.white, for: .normal)
+        sectionNameValue = 2
+        countofTableResults = 30
+       
+       DispatchQueue.main.async {
+           self.forecastTableView.reloadData()
+           self.forecastTableView.scrollToRow(at: IndexPath(row: 15, section: 0), at: .top, animated: true)
+       }
+    }
     
     // MARK: - Configure UI
     
@@ -169,7 +205,7 @@ extension ForecastView : UICollectionViewDelegate, UICollectionViewDataSource {
 extension ForecastView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionNamesArray.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -191,7 +227,7 @@ extension ForecastView: UITableViewDelegate, UITableViewDataSource {
             headerLabel.centerYAnchor.constraint(equalTo: header.centerYAnchor)
         ])
         
-        headerLabel.text = sectionNamesArray[section]
+        headerLabel.text = sectionNamesArray[sectionNameValue]
         return header
     }
     
@@ -200,12 +236,13 @@ extension ForecastView: UITableViewDelegate, UITableViewDataSource {
     }
         
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return countofTableResults
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = forecastTableView.dequeueReusableCell(withIdentifier: "ForecastTableViewCell", for: indexPath) as! ForecastTableViewCell
+        
         
         return cell
         
