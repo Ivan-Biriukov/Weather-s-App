@@ -14,6 +14,10 @@
 		57A32F4D2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A32F4C2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift */; };
 		57A3D5F72A5D63F500CB4F00 /* PrecipitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D5F62A5D63F500CB4F00 /* PrecipitationView.swift */; };
 		57A3D5F92A5D65AF00CB4F00 /* PrecipitationCollectioViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D5F82A5D65AF00CB4F00 /* PrecipitationCollectioViewCell.swift */; };
+		57A3D5FB2A5D9A8C00CB4F00 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D5FA2A5D9A8C00CB4F00 /* PopupViewController.swift */; };
+		57A3D5FD2A5DB92300CB4F00 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D5FC2A5DB92300CB4F00 /* LocationTableViewCell.swift */; };
+		57A3D6002A5DC7C400CB4F00 /* BonsaiController in Frameworks */ = {isa = PBXBuildFile; productRef = 57A3D5FF2A5DC7C400CB4F00 /* BonsaiController */; };
+		57A3D6022A5E05A900CB4F00 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D6012A5E05A900CB4F00 /* NotificationTableViewCell.swift */; };
 		57A3D7752A5C689400EDA4AE /* ForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D7742A5C689400EDA4AE /* ForecastCollectionViewCell.swift */; };
 		57A3D7772A5CB08400EDA4AE /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A3D7762A5CB08400EDA4AE /* ForecastTableViewCell.swift */; };
 		57AA5D552A56E511003EA73D /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57AA5D542A56E511003EA73D /* Poppins-SemiBold.ttf */; };
@@ -45,6 +49,9 @@
 		57A32F4C2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheaterHourlyCollectionViewCell.swift; sourceTree = "<group>"; };
 		57A3D5F62A5D63F500CB4F00 /* PrecipitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationView.swift; sourceTree = "<group>"; };
 		57A3D5F82A5D65AF00CB4F00 /* PrecipitationCollectioViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationCollectioViewCell.swift; sourceTree = "<group>"; };
+		57A3D5FA2A5D9A8C00CB4F00 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
+		57A3D5FC2A5DB92300CB4F00 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		57A3D6012A5E05A900CB4F00 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		57A3D7742A5C689400EDA4AE /* ForecastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCollectionViewCell.swift; sourceTree = "<group>"; };
 		57A3D7762A5CB08400EDA4AE /* ForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastTableViewCell.swift; sourceTree = "<group>"; };
 		57AA5D542A56E511003EA73D /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -75,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57A3D6002A5DC7C400CB4F00 /* BonsaiController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +165,7 @@
 			children = (
 				57AADD4B2A563B92002E5711 /* OnboardingViewController.swift */,
 				57B593852A57728F000ADE4D /* MainViewController.swift */,
+				57A3D5FA2A5D9A8C00CB4F00 /* PopupViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -201,6 +210,8 @@
 				57A3D7742A5C689400EDA4AE /* ForecastCollectionViewCell.swift */,
 				57A3D7762A5CB08400EDA4AE /* ForecastTableViewCell.swift */,
 				57A3D5F82A5D65AF00CB4F00 /* PrecipitationCollectioViewCell.swift */,
+				57A3D5FC2A5DB92300CB4F00 /* LocationTableViewCell.swift */,
+				57A3D6012A5E05A900CB4F00 /* NotificationTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -221,6 +232,9 @@
 			dependencies = (
 			);
 			name = "Weather's App";
+			packageProductDependencies = (
+				57A3D5FF2A5DC7C400CB4F00 /* BonsaiController */,
+			);
 			productName = "Weather's App";
 			productReference = 57AADD442A563B92002E5711 /* Weather's App.app */;
 			productType = "com.apple.product-type.application";
@@ -249,6 +263,9 @@
 				Base,
 			);
 			mainGroup = 57AADD3B2A563B92002E5711;
+			packageReferences = (
+				57A3D5FE2A5DC7C400CB4F00 /* XCRemoteSwiftPackageReference "Bonsai" */,
+			);
 			productRefGroup = 57AADD452A563B92002E5711 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -280,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				579FDCA72A5B241A006362DD /* DailyWeatherTableViewCell.swift in Sources */,
+				57A3D6022A5E05A900CB4F00 /* NotificationTableViewCell.swift in Sources */,
 				57A32F482A598ACD008C2D24 /* GradientLabel.swift in Sources */,
 				57AADD4C2A563B92002E5711 /* OnboardingViewController.swift in Sources */,
 				57A3D7752A5C689400EDA4AE /* ForecastCollectionViewCell.swift in Sources */,
@@ -297,10 +315,12 @@
 				57AA5D5D2A56E692003EA73D /* UIFont+ Extension.swift in Sources */,
 				57AA5D612A570ED6003EA73D /* Constants.swift in Sources */,
 				57A32F4D2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift in Sources */,
+				57A3D5FD2A5DB92300CB4F00 /* LocationTableViewCell.swift in Sources */,
 				57A3D7772A5CB08400EDA4AE /* ForecastTableViewCell.swift in Sources */,
 				57A32F4A2A5A0A1D008C2D24 /* UIVIew+ Extension.swift in Sources */,
 				57C2B2D42A58C96D00768DE3 /* TodayView.swift in Sources */,
 				57B593862A57728F000ADE4D /* MainViewController.swift in Sources */,
+				57A3D5FB2A5D9A8C00CB4F00 /* PopupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +540,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		57A3D5FE2A5DC7C400CB4F00 /* XCRemoteSwiftPackageReference "Bonsai" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rishi420/Bonsai";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		57A3D5FF2A5DC7C400CB4F00 /* BonsaiController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57A3D5FE2A5DC7C400CB4F00 /* XCRemoteSwiftPackageReference "Bonsai" */;
+			productName = BonsaiController;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 57AADD3C2A563B92002E5711 /* Project object */;
 }

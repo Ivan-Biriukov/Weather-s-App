@@ -44,4 +44,8 @@ struct K {
         static let windImg : String = "wind"
         static let sunsetImg : String = "sunset"
     }
+    
+    struct Images {
+        static let locationImg : String = "Shape"
+    }
 }
