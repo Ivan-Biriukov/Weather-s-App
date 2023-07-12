@@ -2,6 +2,8 @@ import UIKit
 
 class TodayView: UIView {
     
+    private let currentWidht = UIScreen.main.bounds.width
+    
     // MARK: - UI Elements
     
                                         // Header Section
@@ -694,6 +696,8 @@ class TodayView: UIView {
         setupairQuelityProgressView()
         airQuelityContainer.addDashedBorder(startX: 15, startY: 150, endX: Int(self.bounds.width) - 35, endY: 150)
         setupSunMoonWayView()
+        
+        adaptiveUI()
     }
     
     required init?(coder: NSCoder) {
@@ -793,12 +797,8 @@ class TodayView: UIView {
             secondLineStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             
             firstGroupStack.topAnchor.constraint(equalTo: secondLineStack.bottomAnchor, constant: 45),
-            firstGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
-            firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -55),
             
             secondGroupStack.topAnchor.constraint(equalTo: firstGroupStack.bottomAnchor, constant: 12),
-            secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
-            secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -55),
             
             hourlyWheaterCollection.topAnchor.constraint(equalTo: secondGroupStack.bottomAnchor, constant: 28),
             hourlyWheaterCollection.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14),
@@ -846,7 +846,6 @@ class TodayView: UIView {
             airQuelityComentLabel.topAnchor.constraint(equalTo: airQuelityTitleStack.bottomAnchor, constant: 51),
             airQuelityComentLabel.leadingAnchor.constraint(equalTo: airQuelityProgressMaxValue.trailingAnchor, constant: 25),
             airQuelityComentLabel.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -20),
-            airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: -14),
             airQuelityBottomStack.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 18),
             airQuelityBottomStack.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -18),
             
@@ -914,6 +913,37 @@ class TodayView: UIView {
         sunMoonWayView.progressColor = .black
         sunMoonWayView.trackColor = .systemYellow
         sunMoonWayView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func adaptiveUI() {
+        if currentWidht <= 380 {
+            secondLineStack.distribution = .fill
+            secondLineStack.spacing = 20
+            firstGroupStack.distribution = .fill
+            firstGroupStack.spacing = 70
+            NSLayoutConstraint.activate([
+                firstGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+                firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+                secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+                secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+                airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor)
+            ])
+            secondGroupStack.distribution = .fill
+            secondGroupStack.spacing = 90
+            airQuelityBottomStack.axis = .vertical
+        } else {
+            secondLineStack.distribution = .equalSpacing
+            firstGroupStack.distribution = .equalSpacing
+            secondGroupStack.distribution = .equalSpacing
+            NSLayoutConstraint.activate([
+                firstGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
+                firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -55),
+                secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
+                secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -55),
+                airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: -14),
+            ])
+            airQuelityBottomStack.axis = .horizontal
+        }
     }
 
 }

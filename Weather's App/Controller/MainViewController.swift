@@ -77,11 +77,7 @@ class MainViewController: UIViewController {
         configureSearchBar()
         hideKeyboardWhenTappedAround()
         contentScrollView.delegate = self
-        
-        forecastView.isHidden = true
-        todayView.isHidden = true
     }
-
     
     // MARK: - Custom Buttons Methods
     
@@ -93,18 +89,30 @@ class MainViewController: UIViewController {
     }
     
     @objc func todayButtonTaped(_ sender: UIButton) {
+        configureTodayView(isHiden: false)
+        configureForecastView(isHiden: true)
+        configurePrecipitationView(isHidden: true)
+        
         changeButtonsTitleStyle(titleText: "Today", button: sender, selected: true)
         changeButtonsTitleStyle(titleText: "Forecast", button: forecastButton, selected: false)
         changeButtonsTitleStyle(titleText: "Precipitation", button: precipitationButton, selected: false)
     }
     
     @objc func forecastButtonTaped(_ sender: UIButton) {
+        configureTodayView(isHiden: true)
+        configureForecastView(isHiden: false)
+        configurePrecipitationView(isHidden: true)
+        
         changeButtonsTitleStyle(titleText: "Forecast", button: sender, selected: true)
         changeButtonsTitleStyle(titleText: "Today", button: todayButton, selected: false)
         changeButtonsTitleStyle(titleText: "Precipitation", button: precipitationButton, selected: false)
     }
     
     @objc func precipitationButtonTaped(_ sender: UIButton) {
+        configureTodayView(isHiden: true)
+        configureForecastView(isHiden: true)
+        configurePrecipitationView(isHidden: false)
+        
         changeButtonsTitleStyle(titleText: "Precipitation", button: sender, selected: true)
         changeButtonsTitleStyle(titleText: "Today", button: todayButton, selected: false)
         changeButtonsTitleStyle(titleText: "Forecast", button: forecastButton, selected: false)
@@ -122,8 +130,6 @@ class MainViewController: UIViewController {
         view.addSubview(separateLine)
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(todayView)
-        contentScrollView.addSubview(forecastView)
-        contentScrollView.addSubview(precipitationView)
     }
     
     private func addButtonsTargets() {
@@ -165,21 +171,74 @@ class MainViewController: UIViewController {
             contentScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-//            todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
-//            todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
-//            todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-//            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
-            
-//            forecastView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
-//            forecastView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
-//            forecastView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-//            forecastView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
-            
-            precipitationView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
-            precipitationView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
-            precipitationView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-            precipitationView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
         ])
+    }
+    
+    private func configureTodayView(isHiden : Bool) {
+        todayView.isHidden = isHiden
+        if isHiden {
+            todayView.removeFromSuperview()
+            NSLayoutConstraint.deactivate([
+            todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor)
+            ])
+        } else {
+            contentScrollView.addSubview(todayView)
+            NSLayoutConstraint.activate([
+            todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor)
+            ])
+        }
+    }
+    
+    private func configureForecastView(isHiden : Bool) {
+        forecastView.isHidden = isHiden
+        if isHiden {
+            forecastView.removeFromSuperview()
+            NSLayoutConstraint.deactivate([
+                forecastView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+                forecastView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+                forecastView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+                forecastView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor,constant: -25),
+            ])
+        } else {
+            contentScrollView.addSubview(forecastView)
+            NSLayoutConstraint.activate([
+                forecastView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+                forecastView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+                forecastView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+                forecastView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor, constant:  -25),
+            ])
+        }
+    }
+    
+    private func configurePrecipitationView(isHidden: Bool) {
+        precipitationView.isHidden = isHidden
+        if isHidden {
+            precipitationView.removeFromSuperview()
+            NSLayoutConstraint.deactivate([
+                precipitationView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+                precipitationView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+                precipitationView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+                precipitationView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor,constant: -25),
+            ])
+        } else {
+            contentScrollView.addSubview(precipitationView)
+            NSLayoutConstraint.activate([
+                precipitationView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+                precipitationView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+                precipitationView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+                precipitationView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor,constant: -25),
+            ])
+        }
     }
 }
 
