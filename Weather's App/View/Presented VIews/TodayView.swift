@@ -18,7 +18,7 @@ class TodayView: UIView {
         return view
     }()
     
-    private let dateLabel : UILabel = {
+    let dateLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -28,7 +28,7 @@ class TodayView: UIView {
         return lb
     }()
     
-    private let wheaterImageView : UIImageView = {
+    let wheaterImageView : UIImageView = {
         let img = UIImageView()
         img.widthAnchor.constraint(equalToConstant: 120).isActive = true
         img.heightAnchor.constraint(equalToConstant: 120).isActive = true
@@ -38,7 +38,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let tempValueLabel : GradientLabel = {
+    let tempValueLabel : GradientLabel = {
         let lb = GradientLabel()
         lb.font = .poppinsTemp()
         lb.text = "33°"
@@ -47,7 +47,7 @@ class TodayView: UIView {
         return lb
     }()
     
-    private let weatherShortDescriptionLabel : UILabel = {
+    let weatherShortDescriptionLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -61,7 +61,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fill
-        stack.alignment = .leading
+        stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -74,7 +74,7 @@ class TodayView: UIView {
         return stack
     }()
     
-    private let dailyMiddleTempLabel: UILabel = {
+    let dailyMiddleTempLabel: UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -83,16 +83,7 @@ class TodayView: UIView {
         return lb
     }()
     
-    private let separateVerticalLine : UIView = {
-        let view = UIView()
-        view.backgroundColor = .darkGrayText
-        view.heightAnchor.constraint(equalToConstant: 14).isActive = true
-        view.widthAnchor.constraint(equalToConstant: 2).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let windSpeedLabel = {
+    let windSpeedLabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -104,7 +95,7 @@ class TodayView: UIView {
     private let secondLineStack : UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .equalSpacing
+        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -121,7 +112,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let probabilityOfPrecipitationLabel : UILabel = {
+     let probabilityOfPrecipitationLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -134,7 +125,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 11
+        stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -148,7 +139,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let humidityLabel : UILabel = {
+    let humidityLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -161,7 +152,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 11
+        stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -183,7 +174,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let windLabel : UILabel = {
+    let windLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -196,7 +187,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 11
+        stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -210,7 +201,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let sunsetLabel : UILabel = {
+     let sunsetLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -223,7 +214,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 11
+        stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -716,7 +707,6 @@ class TodayView: UIView {
         temperatureStack.addArrangedSubview(weatherShortDescriptionLabel)
         addSubview(secondLineStack)
         secondLineStack.addArrangedSubview(dailyMiddleTempLabel)
-        secondLineStack.addArrangedSubview(separateVerticalLine)
         secondLineStack.addArrangedSubview(windSpeedLabel)
         addSubview(firstGroupStack)
         firstGroupStack.addArrangedSubview(precipitationStack)
@@ -794,7 +784,7 @@ class TodayView: UIView {
             
             secondLineStack.topAnchor.constraint(equalTo: firstLineStack.bottomAnchor, constant: 15),
             secondLineStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            secondLineStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            secondLineStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             
             firstGroupStack.topAnchor.constraint(equalTo: secondLineStack.bottomAnchor, constant: 45),
             
@@ -932,14 +922,14 @@ class TodayView: UIView {
             secondGroupStack.spacing = 90
             airQuelityBottomStack.axis = .vertical
         } else {
-            secondLineStack.distribution = .equalSpacing
+            secondLineStack.distribution = .fill
             firstGroupStack.distribution = .equalSpacing
             secondGroupStack.distribution = .equalSpacing
             NSLayoutConstraint.activate([
-                firstGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
-                firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -55),
-                secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
-                secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -55),
+                firstGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+                firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+                secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+                secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
                 airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: -14),
             ])
             airQuelityBottomStack.axis = .horizontal

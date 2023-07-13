@@ -3,6 +3,8 @@ import BonsaiController
 
 class MainViewController: UIViewController {
     
+    var weatherManager = WeatherManager()
+    
     // MARK: - UI Elements
     
     private lazy var searchBar : UISearchBar = {
@@ -77,6 +79,8 @@ class MainViewController: UIViewController {
         configureSearchBar()
         hideKeyboardWhenTappedAround()
         contentScrollView.delegate = self
+        weatherManager.delegate = self
+        currentDate()
     }
     
     // MARK: - Custom Buttons Methods
@@ -154,6 +158,15 @@ class MainViewController: UIViewController {
         let dismissIcon = UIImage(systemName: "xmark.circle")
         dismissIcon!.withTintColor(UIColor.systemRed)
         searchBar.setImage(dismissIcon, for: .clear, state: .normal)
+    }
+    
+    private func currentDate() {
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .medium
+        let dateString = formatter.string(from: currentDate)
+        self.todayView.dateLabel.text = dateString
     }
     
     private func setupConstraints() {
@@ -248,8 +261,19 @@ class MainViewController: UIViewController {
 extension MainViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.searchTextField.text {
+            weatherManager.fetchWeather(cityName: text)
+        }
         searchBar.resignFirstResponder()
     }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if let text = searchBar.searchTextField.text {
+            weatherManager.fetchWeather(cityName: text)
+        }
+    }
+    
+    
 }
 
 // MARK: - ScrollView Delegate
@@ -272,5 +296,32 @@ extension MainViewController: BonsaiControllerDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
     
         return BonsaiController(fromDirection: .left, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
+    }
+}
+
+// MARK: - WeatherManager Delegate
+
+extension MainViewController: WeatherManagerDelegate {
+
+    func didUpdateWeather(weatherManager: WeatherManager, weather: WeatherModel){ //
+
+        DispatchQueue.main.async {
+            self.todayView.tempValueLabel.text = weather.temperatureString
+            
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.dailyMiddleTempLabel, grayText: "\(weather.minTempString)° /\(weather.maxTempString)°", whiteText: "  feels like: \(weather.feelLikeTempString)°C")
+            
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.windSpeedLabel, grayText: "Wind speed:  ", whiteText: "\(weather.windSpeedString) M/S")
+            self.todayView.weatherShortDescriptionLabel.text = weather.conditionName
+            self.todayView.wheaterImageView.image = weather.weatherImage
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.humidityLabel, grayText: "Humidity: ", whiteText:" \(weather.humidityPercentString)")
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.windLabel, grayText: "Wind: ", whiteText: "\(weather.windSpeedString) m/s")
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.sunsetLabel, grayText: "Sunset: ", whiteText: weather.timeStringFromUnixTime(timeInterval: weather.sunset))
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.probabilityOfPrecipitationLabel, grayText: "Precipitation: ", whiteText: weather.precipitationPrecentage())
+        }
+
+    }
+
+    func didFailWIthError(error: Error) {
+        print(error)
     }
 }

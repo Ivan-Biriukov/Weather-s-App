@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		576DA0BD2A5F57CF005D2CC8 /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DA0BC2A5F57CF005D2CC8 /* WeatherDataModel.swift */; };
+		576DA0BF2A5F5D2C005D2CC8 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DA0BE2A5F5D2C005D2CC8 /* WeatherData.swift */; };
+		576DA0C12A5F5D51005D2CC8 /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DA0C02A5F5D51005D2CC8 /* WeatherManager.swift */; };
 		579FDCA72A5B241A006362DD /* DailyWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579FDCA62A5B241A006362DD /* DailyWeatherTableViewCell.swift */; };
 		579FDCA92A5B7664006362DD /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579FDCA82A5B7664006362DD /* CircularProgressView.swift */; };
 		57A32F482A598ACD008C2D24 /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A32F472A598ACD008C2D24 /* GradientLabel.swift */; };
@@ -42,6 +45,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		576DA0BC2A5F57CF005D2CC8 /* WeatherDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
+		576DA0BE2A5F5D2C005D2CC8 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		576DA0C02A5F5D51005D2CC8 /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		579FDCA62A5B241A006362DD /* DailyWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherTableViewCell.swift; sourceTree = "<group>"; };
 		579FDCA82A5B7664006362DD /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		57A32F472A598ACD008C2D24 /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
@@ -143,6 +149,9 @@
 			isa = PBXGroup;
 			children = (
 				57B5937F2A5737F5000ADE4D /* OnboardingDataManager.swift */,
+				576DA0BE2A5F5D2C005D2CC8 /* WeatherData.swift */,
+				576DA0BC2A5F57CF005D2CC8 /* WeatherDataModel.swift */,
+				576DA0C02A5F5D51005D2CC8 /* WeatherManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -306,18 +315,21 @@
 				57AADD482A563B92002E5711 /* AppDelegate.swift in Sources */,
 				57C930082A5C5D5E00BF0310 /* ForecastView.swift in Sources */,
 				57AA5D632A5711C2003EA73D /* UIViewController+ Extension.swift in Sources */,
+				576DA0C12A5F5D51005D2CC8 /* WeatherManager.swift in Sources */,
 				57A3D5F92A5D65AF00CB4F00 /* PrecipitationCollectioViewCell.swift in Sources */,
 				57B5937E2A573747000ADE4D /* OnboardingCollectionViewCell.swift in Sources */,
 				579FDCA92A5B7664006362DD /* CircularProgressView.swift in Sources */,
 				57B593802A5737F5000ADE4D /* OnboardingDataManager.swift in Sources */,
 				57AADD4A2A563B92002E5711 /* SceneDelegate.swift in Sources */,
 				57AA5D5F2A56EEB1003EA73D /* UIColor+ Extension.swift in Sources */,
+				576DA0BF2A5F5D2C005D2CC8 /* WeatherData.swift in Sources */,
 				57AA5D5D2A56E692003EA73D /* UIFont+ Extension.swift in Sources */,
 				57AA5D612A570ED6003EA73D /* Constants.swift in Sources */,
 				57A32F4D2A5A1CAC008C2D24 /* WheaterHourlyCollectionViewCell.swift in Sources */,
 				57A3D5FD2A5DB92300CB4F00 /* LocationTableViewCell.swift in Sources */,
 				57A3D7772A5CB08400EDA4AE /* ForecastTableViewCell.swift in Sources */,
 				57A32F4A2A5A0A1D008C2D24 /* UIVIew+ Extension.swift in Sources */,
+				576DA0BD2A5F57CF005D2CC8 /* WeatherDataModel.swift in Sources */,
 				57C2B2D42A58C96D00768DE3 /* TodayView.swift in Sources */,
 				57B593862A57728F000ADE4D /* MainViewController.swift in Sources */,
 				57A3D5FB2A5D9A8C00CB4F00 /* PopupViewController.swift in Sources */,
