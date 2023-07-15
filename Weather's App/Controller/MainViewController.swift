@@ -263,6 +263,7 @@ extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.searchTextField.text {
             weatherManager.fetchWeather(cityName: text)
+            todayView.hourlyWeatherManager.fetchWeather(cityName: text)
         }
         searchBar.resignFirstResponder()
     }
@@ -270,6 +271,7 @@ extension MainViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         if let text = searchBar.searchTextField.text {
             weatherManager.fetchWeather(cityName: text)
+            todayView.hourlyWeatherManager.fetchWeather(cityName: text)
         }
     }
     
@@ -325,3 +327,18 @@ extension MainViewController: WeatherManagerDelegate {
         print(error)
     }
 }
+
+//// MARK: - HourlyWeatherManagerDelegate
+//
+//extension MainViewController: HourlyWeatherManagerDelegate {
+//    
+//    func didUpdateWeather(weatherManager: HourlyWeatherManager, weather: DailyWeatherModel) {
+//        
+//        DispatchQueue.main.async {
+//            <#code#>
+//        }
+//    }
+//    
+//    
+//}
+

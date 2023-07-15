@@ -26,7 +26,7 @@ struct Wind: Decodable { // Created extra struct for save an wind speed property
     let speed: Double
 }
 
-struct Sys: Codable {
+struct Sys: Decodable {
     let country: String
     let sunrise: Int
     let sunset: Int
@@ -34,20 +34,22 @@ struct Sys: Codable {
 
 // MARK: - Daily Weather Model for every 3 hours for 5 days
 
-struct HourlyWeatherData {
+struct HourlyWeatherData: Decodable {
     let city : City
     let list : [List]
 }
 
-struct City {
+struct City: Decodable {
     let name : String
     let country : String
     let sunrise : Int
     let sunset : Int
 }
 
-struct List {
+struct List: Decodable {
+    let dt : Int
     let dt_txt : String
     let wind : Wind
     let weather : [Weather]
+    let main : Main
 }

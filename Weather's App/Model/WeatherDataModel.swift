@@ -85,3 +85,57 @@ struct WeatherModel { // created the model for our finel object view (all proper
     }
 
 }
+
+//
+//struct HourlyWeatherDataModel {
+//    let date : Int
+//    let dateTime : Int
+//    let sunrise : Int
+//    let sunset : Int
+//    let weatherConditionPerHours : String
+//    let conditionName : String
+//    let temperature : Double
+//    let minTemp : Double
+//    let maxTemp : Double
+//    let windSpeed : Double
+//    let humidity : Int
+//}
+
+struct DailyWeatherModel {
+    let cityName : String
+    let countryName : String
+    let sunriseTime : Int
+    let sunsetTime : Int
+    let days : [Days]
+}
+
+struct Days {
+    let dayDate : Int
+    let timeIntervals : [String] 
+    let HourlyTemp : [Double]
+    let FeelsLikeHourleTemp : [Double]
+    let minHourlyTemp : [Double]
+    let maxHourlyTemp : [Double]
+    let hourlyHumidityValues : [Int]
+    let hourlyWeatherConditionName: [String]
+    let hourlyWindSpeed : [Double]
+    
+    
+    func weatherImage(ElementNumber num: Int) -> UIImage {
+        switch hourlyWeatherConditionName[num] {
+        case "Rain":
+            return UIImage(named: "rain")!
+        case "Shower rain":
+            return UIImage(named: "rain")!
+        case "Clear":
+            return UIImage(named: "Sunny")!
+        case "Thunderstorm":
+            return UIImage(named: "storm")!
+        case "snow":
+            return UIImage(named: "snow")!
+        default:
+            return UIImage(named: "cloudy")!
+        }
+    }
+
+}

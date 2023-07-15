@@ -4,8 +4,19 @@ class TodayView: UIView {
     
     private let currentWidht = UIScreen.main.bounds.width
     
-    // MARK: - UI Elements
+    var hourlyWeatherManager = HourlyWeatherManager()
+    var hourlyWheaterCollectionDataArray : [WheaterHourlyCollectionModel] = [
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0)
+    ]
     
+    // MARK: - UI Elements
                                         // Header Section
     
     private let dateBubleView : UIView = {
@@ -227,7 +238,7 @@ class TodayView: UIView {
         return stack
     }()
     
-    private let hourlyWheaterCollection : UICollectionView = {
+    let hourlyWheaterCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 46, height: 100)
@@ -677,6 +688,7 @@ class TodayView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        hourlyWeatherManager.delegate = self
         conffigure()
         setupConstraints()
         setupDifferentColorsForLabels()
@@ -944,12 +956,15 @@ class TodayView: UIView {
 extension TodayView : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return hourlyWheaterCollectionDataArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourleWheaterCell", for: indexPath) as! WheaterHourlyCollectionViewCell
+        let currentItem = hourlyWheaterCollectionDataArray[indexPath.row]
+        
+        cell.cellData = currentItem
         
         return cell
     }
@@ -985,3 +1000,37 @@ extension TodayView : UITableViewDelegate, UITableViewDataSource {
     
 }
 
+// MARK: - HourlyWeatherManagerDelegate
+
+extension TodayView: HourlyWeatherManagerDelegate {
+    
+    func didUpdateWeather(weatherManager: HourlyWeatherManager, weather: DailyWeatherModel) {
+        
+        DispatchQueue.main.async {
+            self.hourlyWheaterCollectionDataArray = []
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[0], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 0), tempValueLabel: weather.days[0].HourlyTemp[0]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[1], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 1), tempValueLabel: weather.days[0].HourlyTemp[1]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[2], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 2), tempValueLabel: weather.days[0].HourlyTemp[2]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[3], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 3), tempValueLabel: weather.days[0].HourlyTemp[3]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[4], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 4), tempValueLabel: weather.days[0].HourlyTemp[4]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[5], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 5), tempValueLabel: weather.days[0].HourlyTemp[5]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[6], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 6), tempValueLabel: weather.days[0].HourlyTemp[6]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[7], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 7), tempValueLabel: weather.days[0].HourlyTemp[7]))
+            
+            self.hourlyWheaterCollection.reloadData()
+        }
+    }
+    
+    func didFailWIthError(error: Error) {
+        print(error)
+    }
+    
+}
