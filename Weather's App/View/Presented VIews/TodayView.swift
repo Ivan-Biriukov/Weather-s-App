@@ -1,10 +1,12 @@
 import UIKit
+import CoreLocation
 
 class TodayView: UIView {
     
     private let currentWidht = UIScreen.main.bounds.width
     
     var hourlyWeatherManager = HourlyWeatherManager()
+    let locationManager = CLLocationManager()
     
     var hourlyWheaterCollectionDataArray : [WheaterHourlyCollectionModel] = [
         .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
@@ -24,6 +26,10 @@ class TodayView: UIView {
         .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
         .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0)
     ]
+    
+    
+    var currentTimeString = ""
+    var finishTimeString = ""
     
     // MARK: - UI Elements
                                         // Header Section
@@ -709,6 +715,9 @@ class TodayView: UIView {
         setupSunMoonWayView()
         setupCurrentTimeLabelValue()
         adaptiveUI()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
     required init?(coder: NSCoder) {
@@ -720,9 +729,20 @@ class TodayView: UIView {
     func setupCurrentTimeLabelValue() {
         let date = NSDate()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm"
+        dateFormatter.dateFormat = "HH:mm"
         let time = dateFormatter.string(from: date as Date)
         self.currentTimeValueLabel.text = time
+    }
+    
+    func fetchSunProgress(currentTime: String, sunsetTime: String) {
+        if currentTime != "" && sunsetTime != "" {
+            let endTime = Float(sunsetTime[0] + sunsetTime[1] + "." + sunsetTime[5] + sunsetTime[6])
+            let nowTime = Float(currentTime[0] + currentTime[1] + "." + currentTime[3] + currentTime[4])
+            if let saveNow = nowTime, let saveEnd = endTime {
+                let result = saveNow / saveEnd
+                self.sunMoonWayView.progress = result
+            }
+        }
     }
     
     
@@ -1080,23 +1100,41 @@ extension TodayView: HourlyWeatherManagerDelegate {
             self.detailDescriptionLabel.text = "Tonight in \(weather.cityName) - \(weather.days[0].hourlyWeatherConditionName[1]). Average Wind speed is equal to \(averageWindSpeed) m / s. Night temperature will be - \(weather.days[0].HourlyTemp[1]) temperature at the middle of day will be - \(weather.days[0].HourlyTemp[6])"
             
             
-            
+            self.finishTimeString = weather.timeStringFromUnixTime(timeInterval: weather.sunsetTime)
             
             self.sunPhasesSunriseValueLabel.text = weather.timeStringFromUnixTime(timeInterval: weather.sunriseTime)
-            self.sunPhasesSunsetValueLabel.text = weather.timeStringFromUnixTime(timeInterval: weather.sunsetTime)
+            self.sunPhasesSunsetValueLabel.text = self.finishTimeString
             
+            var currentTimeString : String {
+                let date = NSDate()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm"
+                let time = dateFormatter.string(from: date as Date)
+                return time
+            }
             
-            let str = weather.timeStringFromUnixTime(timeInterval: weather.sunsetTime)
-            let startIndex = str.index(str.startIndex, offsetBy: 0)
-            let endIndex = str.index(str.startIndex, offsetBy: 2)
-            print(String(str[startIndex...endIndex]))
+            self.currentTimeString = currentTimeString
 
-            
+            self.fetchSunProgress(currentTime: self.currentTimeString, sunsetTime: self.finishTimeString)
         }
     }
     
     func didFailWIthError(error: Error) {
         print(error)
     }
+}
+
+extension TodayView: CLLocationManagerDelegate{
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            hourlyWeatherManager.fetchWeather(longitude: lon, latitude: lat)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
 }

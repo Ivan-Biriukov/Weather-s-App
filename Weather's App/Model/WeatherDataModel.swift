@@ -102,10 +102,7 @@ struct DailyWeatherModel {
     func timeStringFromUnixTime(timeInterval : Int) -> String {
         let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
         let dateFormatter = DateFormatter()
-        // Returns date formatted as 12 hour time.
-        dateFormatter.dateStyle = .none
-        dateFormatter.timeStyle = .short
-        //dateFormatter.dateFormat = "hh:mm a"
+        dateFormatter.dateFormat = "HH : mm"
         return dateFormatter.string(from: date as Date)
     }
 }

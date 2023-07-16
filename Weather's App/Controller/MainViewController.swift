@@ -1,9 +1,14 @@
 import UIKit
 import BonsaiController
+import CoreLocation
 
 class MainViewController: UIViewController {
     
     var weatherManager = WeatherManager()
+    let locationManager = CLLocationManager()
+    
+    var latitude : CLLocationDegrees?
+    var longitude : CLLocationDegrees?
     
     // MARK: - UI Elements
     
@@ -21,9 +26,10 @@ class MainViewController: UIViewController {
         return btn
     }()
     
-    private lazy var threeDotsButton : UIButton = {
+    private lazy var locationButton : UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(named: K.NavigationBar.threeDotsButton)!, for: .normal)
+        btn.setImage(UIImage(systemName: "location.north"), for: .normal)
+        btn.addTarget(self, action: #selector(locationButtonTaped), for: .touchUpInside)
         btn.tintColor = .white
         return btn
     }()
@@ -81,6 +87,8 @@ class MainViewController: UIViewController {
         contentScrollView.delegate = self
         weatherManager.delegate = self
         currentDate()
+        setupLocationManager()
+        locationManager.requestLocation()
     }
     
     // MARK: - Custom Buttons Methods
@@ -90,6 +98,10 @@ class MainViewController: UIViewController {
         popupVC.transitioningDelegate = self
         popupVC.modalPresentationStyle = .custom
         self.present(popupVC, animated: true)
+    }
+    
+    @objc func locationButtonTaped() {
+        todayView.locationManager.requestLocation()
     }
     
     @objc func todayButtonTaped(_ sender: UIButton) {
@@ -147,7 +159,7 @@ class MainViewController: UIViewController {
         self.navigationItem.titleView = searchBar
         let accountButtonLeft = UIBarButtonItem(customView: accountButton)
         self.navigationItem.leftBarButtonItem = accountButtonLeft
-        let rightBarButton = UIBarButtonItem(customView: threeDotsButton)
+        let rightBarButton = UIBarButtonItem(customView: locationButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
     }
     
@@ -168,6 +180,12 @@ class MainViewController: UIViewController {
         formatter.dateStyle = .medium
         let dateString = formatter.string(from: currentDate)
         self.todayView.dateLabel.text = dateString
+    }
+    
+    private func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
     private func setupConstraints() {
@@ -331,17 +349,22 @@ extension MainViewController: WeatherManagerDelegate {
     }
 }
 
-//// MARK: - HourlyWeatherManagerDelegate
-//
-//extension MainViewController: HourlyWeatherManagerDelegate {
-//    
-//    func didUpdateWeather(weatherManager: HourlyWeatherManager, weather: DailyWeatherModel) {
-//        
-//        DispatchQueue.main.async {
-//            <#code#>
-//        }
-//    }
-//    
-//    
-//}
+// MARK: - CLLocationManagerDelegate
+extension MainViewController: CLLocationManagerDelegate{
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            self.longitude = lon
+            self.latitude = lat
+            weatherManager.fetchWeather(longitude: lon, latitude: lat)
+            HourlyWeatherManager().fetchWeather(longitude: lon, latitude: lat)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+}
 
