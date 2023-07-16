@@ -86,27 +86,28 @@ struct WeatherModel { // created the model for our finel object view (all proper
 
 }
 
-//
-//struct HourlyWeatherDataModel {
-//    let date : Int
-//    let dateTime : Int
-//    let sunrise : Int
-//    let sunset : Int
-//    let weatherConditionPerHours : String
-//    let conditionName : String
-//    let temperature : Double
-//    let minTemp : Double
-//    let maxTemp : Double
-//    let windSpeed : Double
-//    let humidity : Int
-//}
 
 struct DailyWeatherModel {
     let cityName : String
     let countryName : String
     let sunriseTime : Int
     let sunsetTime : Int
+    let population : Int
     let days : [Days]
+    
+    func doubleToRoundedString(value : Double) -> String{
+        return String(format: "%.1f", value)
+    }
+    
+    func timeStringFromUnixTime(timeInterval : Int) -> String {
+        let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
+        let dateFormatter = DateFormatter()
+        // Returns date formatted as 12 hour time.
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = .short
+        //dateFormatter.dateFormat = "hh:mm a"
+        return dateFormatter.string(from: date as Date)
+    }
 }
 
 struct Days {
@@ -119,6 +120,7 @@ struct Days {
     let hourlyHumidityValues : [Int]
     let hourlyWeatherConditionName: [String]
     let hourlyWindSpeed : [Double]
+    let visibiliti : [Int]
     
     
     func weatherImage(ElementNumber num: Int) -> UIImage {
@@ -137,5 +139,22 @@ struct Days {
             return UIImage(named: "cloudy")!
         }
     }
+    
+    func todayStringDate() -> String {
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .medium
+        let dateString = formatter.string(from: currentDate)
+        return dateString
+    }
+    
+    func futureDates(timeInterval : Int) -> String {
+        let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .medium
 
+        return dateFormatter.string(from: date as Date)
+    }
 }

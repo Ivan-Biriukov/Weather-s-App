@@ -44,6 +44,7 @@ struct City: Decodable {
     let country : String
     let sunrise : Int
     let sunset : Int
+    let population : Int
 }
 
 struct List: Decodable {
@@ -52,4 +53,5 @@ struct List: Decodable {
     let wind : Wind
     let weather : [Weather]
     let main : Main
+    let visibility : Int
 }

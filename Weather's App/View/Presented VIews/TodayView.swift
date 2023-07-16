@@ -5,6 +5,7 @@ class TodayView: UIView {
     private let currentWidht = UIScreen.main.bounds.width
     
     var hourlyWeatherManager = HourlyWeatherManager()
+    
     var hourlyWheaterCollectionDataArray : [WheaterHourlyCollectionModel] = [
         .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
         .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
@@ -14,6 +15,14 @@ class TodayView: UIView {
         .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
         .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
         .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0)
+    ]
+    
+    var dailyTableViewArray : [DailyTableViewDataModel] = [
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0)
     ]
     
     // MARK: - UI Elements
@@ -404,7 +413,7 @@ class TodayView: UIView {
         lb.font = .poppinsMedium12()
         lb.textColor = .white
         lb.textAlignment = .center
-        lb.text = "Low 0"
+        lb.text = "Unknown"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -419,22 +428,22 @@ class TodayView: UIView {
     }()
     
     
-    private let detailDewpointLabel : UILabel = {
+    private let detailPopulationLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textColor = .lightGrayText
         lb.textAlignment = .center
-        lb.text = "Dew point"
+        lb.text = "Population"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private let detailDewpointValueLabel : UILabel = {
+    private let detailPopulationValueLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsMedium12()
         lb.textColor = .white
         lb.textAlignment = .center
-        lb.text = "56°"
+        lb.text = "5654"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -452,7 +461,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fill
-        stack.alignment = .center
+        stack.alignment = .leading
         stack.spacing = 15
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -683,7 +692,6 @@ class TodayView: UIView {
         return lb
     }()
     
-    
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -699,7 +707,7 @@ class TodayView: UIView {
         setupairQuelityProgressView()
         airQuelityContainer.addDashedBorder(startX: 15, startY: 150, endX: Int(self.bounds.width) - 35, endY: 150)
         setupSunMoonWayView()
-        
+        setupCurrentTimeLabelValue()
         adaptiveUI()
     }
     
@@ -708,6 +716,15 @@ class TodayView: UIView {
     }
     
     // MARK: - Configure Section
+    
+    func setupCurrentTimeLabelValue() {
+        let date = NSDate()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm"
+        let time = dateFormatter.string(from: date as Date)
+        self.currentTimeValueLabel.text = time
+    }
+    
     
     private func conffigure() {
         addSubview(dateBubleView)
@@ -753,8 +770,8 @@ class TodayView: UIView {
         detailsFourthLaneStack.addArrangedSubview(detailUVIndexLabel)
         detailsFourthLaneStack.addArrangedSubview(detailUVIndexValueLabel)
         detailsMainRightStack.addArrangedSubview(detailsFifthLaneStack)
-        detailsFifthLaneStack.addArrangedSubview(detailDewpointLabel)
-        detailsFifthLaneStack.addArrangedSubview(detailDewpointValueLabel)
+        detailsFifthLaneStack.addArrangedSubview(detailPopulationLabel)
+        detailsFifthLaneStack.addArrangedSubview(detailPopulationValueLabel)
         detailsContainer.addSubview(detailDescriptionLabel)
         addSubview(airQuelityContainer)
         airQuelityContainer.addSubview(airQuelityTitleStack)
@@ -865,10 +882,10 @@ class TodayView: UIView {
             sunSetVerticalStack.trailingAnchor.constraint(equalTo: sunPhasesContainer.trailingAnchor, constant: -22),
             
             sunMoonWayView.topAnchor.constraint(equalTo: sunPhasesContainer.topAnchor, constant: 41),
-            sunMoonWayView.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 45),
+            sunMoonWayView.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 55),
             
             currentTimeValueLabel.topAnchor.constraint(equalTo: sunPhasesContainer.topAnchor, constant: 70),
-            currentTimeValueLabel.centerXAnchor.constraint(equalTo: sunPhasesContainer.centerXAnchor),
+            currentTimeValueLabel.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 77)
 
         ])
     }
@@ -976,7 +993,7 @@ extension TodayView : UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return dailyTableViewArray.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -986,8 +1003,9 @@ extension TodayView : UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         } else {
-            
             let cell = dailyTepmTable.dequeueReusableCell(withIdentifier: "dailyTempTableCell", for: indexPath) as! DailyWeatherTableViewCell
+            let currentItem = dailyTableViewArray[indexPath.row - 1 ]
+            cell.cellData = currentItem
             cell.selectionStyle = .none
             return cell
         }
@@ -1026,6 +1044,54 @@ extension TodayView: HourlyWeatherManagerDelegate {
             self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[7], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 7), tempValueLabel: weather.days[0].HourlyTemp[7]))
             
             self.hourlyWheaterCollection.reloadData()
+            
+            self.dailyTableViewArray = []
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[0].todayStringDate(), weatherConditionImage: weather.days[0].weatherImage(ElementNumber: 4) , minTempValue: weather.days[0].minHourlyTemp[0], maxTempvalue: weather.days[0].maxHourlyTemp[5]))
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[1].futureDates(timeInterval: weather.days[1].dayDate), weatherConditionImage: weather.days[1].weatherImage(ElementNumber: 4) , minTempValue: weather.days[1].minHourlyTemp[0], maxTempvalue: weather.days[1].maxHourlyTemp[5]))
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[2].futureDates(timeInterval: weather.days[2].dayDate), weatherConditionImage: weather.days[2].weatherImage(ElementNumber: 4) , minTempValue: weather.days[2].minHourlyTemp[0], maxTempvalue: weather.days[2].maxHourlyTemp[5]))
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[3].futureDates(timeInterval: weather.days[3].dayDate), weatherConditionImage: weather.days[3].weatherImage(ElementNumber: 4) , minTempValue: weather.days[3].minHourlyTemp[0], maxTempvalue: weather.days[3].maxHourlyTemp[5]))
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[4].futureDates(timeInterval: weather.days[4].dayDate), weatherConditionImage: weather.days[4].weatherImage(ElementNumber: 4) , minTempValue: weather.days[4].minHourlyTemp[0], maxTempvalue: weather.days[4].maxHourlyTemp[5]))
+            
+            self.dailyTepmTable.reloadData()
+            
+            self.detailWeatherConditionImg.image = weather.days[0].weatherImage(ElementNumber: 4)
+            
+            let avarageFeelsTemp = weather.days[0].FeelsLikeHourleTemp.sum() / Double(weather.days[0].FeelsLikeHourleTemp.count)
+            
+            self.detailFeelsLikeValueLabel.text = weather.doubleToRoundedString(value: avarageFeelsTemp)
+            
+            let avarageHumiditi = weather.days[0].hourlyHumidityValues.sum() / weather.days[0].hourlyHumidityValues.count
+            
+            self.detailHumidityValueLabel.text = "\(avarageHumiditi)%"
+            
+            let avarageVisibility = (weather.days[0].visibiliti.sum() / weather.days[0].visibiliti.count) / 1000
+            
+            self.detailVisibilityValueLabel.text = "\(avarageVisibility) KM"
+            
+            self.detailPopulationValueLabel.text = "\(weather.population)"
+            
+            let averageWindSpeed = String(format: "%.2f", weather.days[0].hourlyWindSpeed.sum() / Double(weather.days[0].hourlyWindSpeed.count))
+            
+            self.detailDescriptionLabel.text = "Tonight in \(weather.cityName) - \(weather.days[0].hourlyWeatherConditionName[1]). Average Wind speed is equal to \(averageWindSpeed) m / s. Night temperature will be - \(weather.days[0].HourlyTemp[1]) temperature at the middle of day will be - \(weather.days[0].HourlyTemp[6])"
+            
+            
+            
+            
+            self.sunPhasesSunriseValueLabel.text = weather.timeStringFromUnixTime(timeInterval: weather.sunriseTime)
+            self.sunPhasesSunsetValueLabel.text = weather.timeStringFromUnixTime(timeInterval: weather.sunsetTime)
+            
+            
+            let str = weather.timeStringFromUnixTime(timeInterval: weather.sunsetTime)
+            let startIndex = str.index(str.startIndex, offsetBy: 0)
+            let endIndex = str.index(str.startIndex, offsetBy: 2)
+            print(String(str[startIndex...endIndex]))
+
+            
         }
     }
     

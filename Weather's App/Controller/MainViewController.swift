@@ -100,6 +100,7 @@ class MainViewController: UIViewController {
         changeButtonsTitleStyle(titleText: "Today", button: sender, selected: true)
         changeButtonsTitleStyle(titleText: "Forecast", button: forecastButton, selected: false)
         changeButtonsTitleStyle(titleText: "Precipitation", button: precipitationButton, selected: false)
+        todayView.setupCurrentTimeLabelValue()
     }
     
     @objc func forecastButtonTaped(_ sender: UIButton) {
@@ -264,6 +265,7 @@ extension MainViewController: UISearchBarDelegate {
         if let text = searchBar.searchTextField.text {
             weatherManager.fetchWeather(cityName: text)
             todayView.hourlyWeatherManager.fetchWeather(cityName: text)
+            todayView.setupCurrentTimeLabelValue()
         }
         searchBar.resignFirstResponder()
     }
@@ -272,6 +274,7 @@ extension MainViewController: UISearchBarDelegate {
         if let text = searchBar.searchTextField.text {
             weatherManager.fetchWeather(cityName: text)
             todayView.hourlyWeatherManager.fetchWeather(cityName: text)
+            todayView.setupCurrentTimeLabelValue()
         }
     }
     

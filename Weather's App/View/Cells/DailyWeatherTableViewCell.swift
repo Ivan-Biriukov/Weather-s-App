@@ -2,6 +2,15 @@ import UIKit
 
 class DailyWeatherTableViewCell: UITableViewCell {
     
+    var cellData : DailyTableViewDataModel? {
+        didSet {
+            self.dayLabel.text = cellData?.date
+            self.wheatherConditionImg.image = cellData?.weatherConditionImage
+            self.minTempLabel.text = cellData?.minTempTOString()
+            self.maxTempLabel.text = cellData?.maxTempTOString()
+        }
+    }
+    
     private let container : UIView = {
         let container = UIView()
         container.backgroundColor = .additionalViewBackground
@@ -94,7 +103,7 @@ class DailyWeatherTableViewFirstIndexCell: UITableViewCell {
         lb.font = .poppinsRegular14()
         lb.textAlignment = .right
         lb.textColor = .darkGrayText
-        lb.text = "High  |  Low"
+        lb.text = "Low  |  High"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
