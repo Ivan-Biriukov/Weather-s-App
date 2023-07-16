@@ -486,7 +486,7 @@ class TodayView: UIView {
     
                                     // Air Quelity Section
     
-    private let airQuelityContainer : UIView = {
+    private let pressureContainer : UIView = {
         let view = UIView()
         view.backgroundColor = .additionalViewBackground
         view.clipsToBounds = false
@@ -500,17 +500,17 @@ class TodayView: UIView {
         return view
     }()
     
-    private let airQuelityMainTitle : UILabel = {
+    private let airPressureMainTitle : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsSemiBold14()
         lb.textColor = .white
         lb.textAlignment = .left
-        lb.text = "Air Quality"
+        lb.text = "Air Pressure"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private lazy var airQuelityInfoButton : UIButton = {
+    private lazy var airPressureInfoButton : UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "info.circle"), for: .normal)
         btn.tintColor = .white
@@ -520,7 +520,7 @@ class TodayView: UIView {
         return btn
     }()
     
-    private let airQuelityTitleStack : UIStackView = {
+    private let airPressureTitleStack : UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .equalSpacing
@@ -528,29 +528,29 @@ class TodayView: UIView {
         return stack
     }()
     
-    private let airQuelityProgressView = CircularProgressView(frame: CGRect(x: 0, y: 0, width: 110, height: 110),lineWidth: 5, rounded: true)
+    let airPressureProgressView = CircularProgressView(frame: CGRect(x: 0, y: 0, width: 110, height: 110),lineWidth: 5, rounded: true)
     
-    private let airQuelityProgressMinValue : UILabel = {
+    private let airPressureProgressMinValue : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular8()
         lb.textColor = .darkGrayText
         lb.textAlignment = .left
-        lb.text = "0"
+        lb.text = "600"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private let airQuelityProgressMaxValue : UILabel = {
+    private let airPressureProgressMaxValue : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular8()
         lb.textColor = .darkGrayText
         lb.textAlignment = .left
-        lb.text = "500"
+        lb.text = "900"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private let airQuelityCurrentIndexValue : UILabel = {
+    let airPressureCurrentIndexValue : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsSemiBold28()
         lb.textColor = .white
@@ -560,13 +560,13 @@ class TodayView: UIView {
         return lb
     }()
     
-    private let airQuelityComentLabel : UILabel = {
+    private let airPressureComentLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsLight10()
         lb.textColor = .lightGrayText
         lb.textAlignment = .left
         lb.numberOfLines = 0
-        lb.text = "You have good air quality - enjoy your outdoor activities."
+        lb.text = "A person feels most comfortable if the barometric pressure is 760 mm Hg. pillar. Slight deviations of 10 mm cannot affect your well-being."
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -709,9 +709,9 @@ class TodayView: UIView {
         addDashedBorder(startX: 15, startY: 220, endX: Int(self.bounds.width) - 20, endY: 220)
         setupCollection()
         setupTableView()
-        airQuelityProgressView.translatesAutoresizingMaskIntoConstraints = false
+        airPressureProgressView.translatesAutoresizingMaskIntoConstraints = false
         setupairQuelityProgressView()
-        airQuelityContainer.addDashedBorder(startX: 15, startY: 150, endX: Int(self.bounds.width) - 35, endY: 150)
+        pressureContainer.addDashedBorder(startX: 15, startY: 150, endX: Int(self.bounds.width) - 35, endY: 150)
         setupSunMoonWayView()
         setupCurrentTimeLabelValue()
         adaptiveUI()
@@ -793,16 +793,16 @@ class TodayView: UIView {
         detailsFifthLaneStack.addArrangedSubview(detailPopulationLabel)
         detailsFifthLaneStack.addArrangedSubview(detailPopulationValueLabel)
         detailsContainer.addSubview(detailDescriptionLabel)
-        addSubview(airQuelityContainer)
-        airQuelityContainer.addSubview(airQuelityTitleStack)
-        airQuelityTitleStack.addArrangedSubview(airQuelityMainTitle)
-        airQuelityTitleStack.addArrangedSubview(airQuelityInfoButton)
-        airQuelityContainer.addSubview(airQuelityProgressView)
-        airQuelityContainer.addSubview(airQuelityProgressMinValue)
-        airQuelityContainer.addSubview(airQuelityProgressMaxValue)
-        airQuelityContainer.addSubview(airQuelityCurrentIndexValue)
-        airQuelityContainer.addSubview(airQuelityComentLabel)
-        airQuelityContainer.addSubview(airQuelityBottomStack)
+        addSubview(pressureContainer)
+        pressureContainer.addSubview(airPressureTitleStack)
+        airPressureTitleStack.addArrangedSubview(airPressureMainTitle)
+        airPressureTitleStack.addArrangedSubview(airPressureInfoButton)
+        pressureContainer.addSubview(airPressureProgressView)
+        pressureContainer.addSubview(airPressureProgressMinValue)
+        pressureContainer.addSubview(airPressureProgressMaxValue)
+        pressureContainer.addSubview(airPressureCurrentIndexValue)
+        pressureContainer.addSubview(airPressureComentLabel)
+        pressureContainer.addSubview(airQuelityBottomStack)
         airQuelityBottomStack.addArrangedSubview(usEpaAqiLabel)
         airQuelityBottomStack.addArrangedSubview(dominantPollutantLabel)
         
@@ -866,29 +866,29 @@ class TodayView: UIView {
             detailDescriptionLabel.trailingAnchor.constraint(equalTo: detailsContainer.trailingAnchor, constant: -25),
             detailDescriptionLabel.topAnchor.constraint(equalTo: detailsMainRightStack.bottomAnchor, constant: 40),
             
-            airQuelityContainer.heightAnchor.constraint(equalToConstant: 200),
-            airQuelityContainer.topAnchor.constraint(equalTo: detailsContainer.bottomAnchor, constant: 20),
-            airQuelityContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            airQuelityContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            airQuelityTitleStack.topAnchor.constraint(equalTo: airQuelityContainer.topAnchor, constant: 10),
-            airQuelityTitleStack.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 22),
-            airQuelityTitleStack.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -22),
-            airQuelityProgressView.topAnchor.constraint(equalTo: airQuelityTitleStack.bottomAnchor, constant: 18),
-            airQuelityProgressView.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 22),
+            pressureContainer.heightAnchor.constraint(equalToConstant: 200),
+            pressureContainer.topAnchor.constraint(equalTo: detailsContainer.bottomAnchor, constant: 20),
+            pressureContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            pressureContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            airPressureTitleStack.topAnchor.constraint(equalTo: pressureContainer.topAnchor, constant: 10),
+            airPressureTitleStack.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 22),
+            airPressureTitleStack.trailingAnchor.constraint(equalTo: pressureContainer.trailingAnchor, constant: -22),
+            airPressureProgressView.topAnchor.constraint(equalTo: airPressureTitleStack.bottomAnchor, constant: 18),
+            airPressureProgressView.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 22),
             
-            airQuelityProgressMinValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 80),
-            airQuelityProgressMinValue.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 30),
-            airQuelityProgressMaxValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 80),
-            airQuelityProgressMaxValue.leadingAnchor.constraint(equalTo: airQuelityProgressMinValue.trailingAnchor, constant: 72.5),
-            airQuelityCurrentIndexValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 17),
-            airQuelityCurrentIndexValue.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 57),
-            airQuelityComentLabel.topAnchor.constraint(equalTo: airQuelityTitleStack.bottomAnchor, constant: 51),
-            airQuelityComentLabel.leadingAnchor.constraint(equalTo: airQuelityProgressMaxValue.trailingAnchor, constant: 25),
-            airQuelityComentLabel.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -20),
-            airQuelityBottomStack.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 18),
-            airQuelityBottomStack.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -18),
+            airPressureProgressMinValue.topAnchor.constraint(equalTo: airPressureProgressView.bottomAnchor, constant: 80),
+            airPressureProgressMinValue.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 30),
+            airPressureProgressMaxValue.topAnchor.constraint(equalTo: airPressureProgressView.bottomAnchor, constant: 80),
+            airPressureProgressMaxValue.leadingAnchor.constraint(equalTo: airPressureProgressMinValue.trailingAnchor, constant: 65),
+            airPressureCurrentIndexValue.topAnchor.constraint(equalTo: airPressureProgressView.bottomAnchor, constant: 30),
+            airPressureCurrentIndexValue.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 52),
+            airPressureComentLabel.topAnchor.constraint(equalTo: airPressureTitleStack.bottomAnchor, constant: 31),
+            airPressureComentLabel.leadingAnchor.constraint(equalTo: airPressureProgressMaxValue.trailingAnchor, constant: 25),
+            airPressureComentLabel.trailingAnchor.constraint(equalTo: pressureContainer.trailingAnchor, constant: -20),
+            airQuelityBottomStack.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 18),
+            airQuelityBottomStack.trailingAnchor.constraint(equalTo: pressureContainer.trailingAnchor, constant: -18),
             
-            sunPhasesContainer.topAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: 20),
+            sunPhasesContainer.topAnchor.constraint(equalTo: pressureContainer.bottomAnchor, constant: 20),
             sunPhasesContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             sunPhasesContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             sunPhasesContainer.heightAnchor.constraint(equalToConstant: 180),
@@ -917,8 +917,8 @@ class TodayView: UIView {
         feelsLikeAtributtedString(forLAbel: humidityLabel, grayText: "Humidity: ", whiteText: "59%")
         feelsLikeAtributtedString(forLAbel: windLabel, grayText: "Wind: ", whiteText: "10 km/h")
         feelsLikeAtributtedString(forLAbel: sunsetLabel, grayText: "Sunset: ", whiteText: "18:34")
-        feelsLikeAtributtedString(forLAbel: usEpaAqiLabel, grayText: "US EPA AQI ", whiteText: " 49/500")
-        feelsLikeAtributtedString(forLAbel: dominantPollutantLabel, grayText: "Dominant pollutant ", whiteText: " PM 10")
+        feelsLikeAtributtedString(forLAbel: usEpaAqiLabel, grayText: "Historic low ", whiteText: " 654")
+        feelsLikeAtributtedString(forLAbel: dominantPollutantLabel, grayText: "All-time high ", whiteText: " 812")
     }
     
     private func setupCollection() {
@@ -935,16 +935,16 @@ class TodayView: UIView {
     }
     
     private func setupairQuelityProgressView() {
-        airQuelityProgressView.progress = 0.8
+        airPressureProgressView.progress = 0.8
 
-        if airQuelityProgressView.progress <= 0.30 {
-            airQuelityProgressView.progressColor = .green
-        } else if airQuelityProgressView.progress <= 0.50 {
-            airQuelityProgressView.progressColor = .yellow
-        } else if airQuelityProgressView.progress > 0.50{
-            airQuelityProgressView.progressColor = .red
+        if airPressureProgressView.progress <= 0.30 {
+            airPressureProgressView.progressColor = .green
+        } else if airPressureProgressView.progress <= 0.50 {
+            airPressureProgressView.progressColor = .yellow
+        } else if airPressureProgressView.progress > 0.50{
+            airPressureProgressView.progressColor = .red
         }
-        airQuelityProgressView.trackColor = .lightGray
+        airPressureProgressView.trackColor = .lightGray
     }
     
     private func setupSunMoonWayView() {
@@ -965,7 +965,7 @@ class TodayView: UIView {
                 firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
                 secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
                 secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-                airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor)
+                airQuelityBottomStack.bottomAnchor.constraint(equalTo: pressureContainer.bottomAnchor)
             ])
             secondGroupStack.distribution = .fill
             secondGroupStack.spacing = 90
@@ -979,7 +979,7 @@ class TodayView: UIView {
                 firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
                 secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
                 secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-                airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: -14),
+                airQuelityBottomStack.bottomAnchor.constraint(equalTo: pressureContainer.bottomAnchor, constant: -14),
             ])
             airQuelityBottomStack.axis = .horizontal
         }
@@ -1131,6 +1131,7 @@ extension TodayView: CLLocationManagerDelegate{
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
             hourlyWeatherManager.fetchWeather(longitude: lon, latitude: lat)
+            
         }
     }
     

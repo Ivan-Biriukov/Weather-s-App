@@ -14,6 +14,7 @@ struct Main: Decodable { // Create another struct becouse for property temp in o
     let temp_min: Double
     let temp_max: Double
     let humidity: Int
+    let pressure: Int
 }
 
 struct Weather: Decodable { // Create another struct becouse for property discription in our url we got that way: weather[0].description ->

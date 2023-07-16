@@ -102,6 +102,7 @@ class MainViewController: UIViewController {
     
     @objc func locationButtonTaped() {
         todayView.locationManager.requestLocation()
+        locationManager.requestLocation()
     }
     
     @objc func todayButtonTaped(_ sender: UIButton) {
@@ -340,6 +341,9 @@ extension MainViewController: WeatherManagerDelegate {
             self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.windLabel, grayText: "Wind: ", whiteText: "\(weather.windSpeedString) m/s")
             self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.sunsetLabel, grayText: "Sunset: ", whiteText: weather.timeStringFromUnixTime(timeInterval: weather.sunset))
             self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.probabilityOfPrecipitationLabel, grayText: "Precipitation: ", whiteText: weather.precipitationPrecentage())
+            self.todayView.airPressureCurrentIndexValue.text = weather.pressureToString
+            
+            self.todayView.airPressureProgressView.progress = Float(900) / Float(weather.pressure)
         }
 
     }

@@ -61,8 +61,9 @@ struct WeatherManager {
             let countryName = decodedData.sys.country
             let wind = decodedData.wind.speed
             let conditionName = decodedData.weather[0].main
+            let pressure = decodedData.main.pressure
             
-            let weather = WeatherModel(conditionId: id, conditionName: conditionName, countryName: countryName, cityName: cityName, temperature: temp, feelLikeTemp: feelsLikeTemp, minTemp: tempMin, maxTemp: tempMax, windSpeed: wind, humidity: humidity, sunrise: sunriseTime, sunset: sunsetTime)
+            let weather = WeatherModel(conditionId: id, conditionName: conditionName, countryName: countryName, cityName: cityName, temperature: temp, feelLikeTemp: feelsLikeTemp, minTemp: tempMin, maxTemp: tempMax, windSpeed: wind, humidity: humidity, sunrise: sunriseTime, sunset: sunsetTime, pressure: pressure)
             
             return weather
         } catch {

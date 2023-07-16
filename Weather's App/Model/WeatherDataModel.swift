@@ -13,6 +13,7 @@ struct WeatherModel { // created the model for our finel object view (all proper
     let humidity: Int
     let sunrise: Int
     let sunset: Int
+    let pressure : Int
     
     
     var weatherImage : UIImage {
@@ -54,6 +55,11 @@ struct WeatherModel { // created the model for our finel object view (all proper
     
     var  windSpeedString: String{
         return String(format: "%.1f", windSpeed)
+    }
+    
+    var pressureToString : String {
+         let currentPressure = Double(pressure) * 0.75
+        return "\(Int(currentPressure))"
     }
         
     func timeStringFromUnixTime(timeInterval : Int) -> String {
