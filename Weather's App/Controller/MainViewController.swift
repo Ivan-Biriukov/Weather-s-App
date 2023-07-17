@@ -285,6 +285,8 @@ extension MainViewController: UISearchBarDelegate {
             weatherManager.fetchWeather(cityName: text)
             todayView.hourlyWeatherManager.fetchWeather(cityName: text)
             todayView.setupCurrentTimeLabelValue()
+            forecastView.hourlyWeatherManager.fetchWeather(cityName: text)
+            precipitationView.hourlyWeatherManager.fetchWeather(cityName: text)
         }
         searchBar.resignFirstResponder()
     }
@@ -294,6 +296,8 @@ extension MainViewController: UISearchBarDelegate {
             weatherManager.fetchWeather(cityName: text)
             todayView.hourlyWeatherManager.fetchWeather(cityName: text)
             todayView.setupCurrentTimeLabelValue()
+            forecastView.hourlyWeatherManager.fetchWeather(cityName: text)
+            precipitationView.hourlyWeatherManager.fetchWeather(cityName: text)
         }
     }
     
@@ -364,6 +368,8 @@ extension MainViewController: CLLocationManagerDelegate{
             self.latitude = lat
             weatherManager.fetchWeather(longitude: lon, latitude: lat)
             HourlyWeatherManager().fetchWeather(longitude: lon, latitude: lat)
+            forecastView.hourlyWeatherManager.fetchWeather(longitude: lon, latitude: lat)
+            precipitationView.hourlyWeatherManager.fetchWeather(longitude: lon, latitude: lat)
         }
     }
     

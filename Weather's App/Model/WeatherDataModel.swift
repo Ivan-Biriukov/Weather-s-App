@@ -111,6 +111,13 @@ struct DailyWeatherModel {
         dateFormatter.dateFormat = "HH : mm"
         return dateFormatter.string(from: date as Date)
     }
+    
+    func futureSHortDates(timeInterval : Int) -> String {
+        let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM"
+        return dateFormatter.string(from: date as Date)
+    }
 }
 
 struct Days {
@@ -157,7 +164,8 @@ struct Days {
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .none
         dateFormatter.dateStyle = .medium
-
         return dateFormatter.string(from: date as Date)
     }
+    
+
 }
