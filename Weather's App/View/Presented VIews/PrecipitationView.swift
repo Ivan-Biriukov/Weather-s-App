@@ -10,6 +10,8 @@ class PrecipitationView: UIView {
     
     var forecastFutureDaysArray : [ForecastTableViewDataModel] = []
     
+    var daysHumiditiValuesArra : [PrecipitationCollectionDataModel] = []
+    
     // MARK: - UI Elements
     
     private let mainTitleLabel : UILabel = {
@@ -17,7 +19,7 @@ class PrecipitationView: UIView {
         lb.font = .poppinsSemiBold14()
         lb.textColor = .darkGrayText
         lb.textAlignment = .center
-        lb.text = "Precipitation"
+        lb.text = "Humiditi"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -58,6 +60,17 @@ class PrecipitationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func fetchViewHeight(currentPercentage : Int) -> CGFloat {
+        if currentPercentage == 0 {
+            return CGFloat(0)
+        } else if currentPercentage == 100 {
+            return CGFloat(150)
+        } else {
+            let calculatedValue = Double(150) * (Double(currentPercentage) / Double(100))
+            let roundedValue = CGFloat(calculatedValue.rounded())
+            return roundedValue
+        }
+    }
     
     
     // MARK: - Configure UI
@@ -83,8 +96,8 @@ class PrecipitationView: UIView {
             mainTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             mainTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 21),
             precipitationCollectioView.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 20),
-            precipitationCollectioView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            precipitationCollectioView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            precipitationCollectioView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60),
+            precipitationCollectioView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
             precipitationTableView.topAnchor.constraint(equalTo: precipitationCollectioView.bottomAnchor, constant: 20),
             precipitationTableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             precipitationTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
@@ -98,13 +111,16 @@ class PrecipitationView: UIView {
 extension PrecipitationView : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return daysHumiditiValuesArra.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = precipitationCollectioView.dequeueReusableCell(withReuseIdentifier: "PrecipitationCollectioViewCell", for: indexPath) as! PrecipitationCollectioViewCell
         
+        let currentCell = daysHumiditiValuesArra[indexPath.row]
+        cell.cellData = currentCell
+        cell.progressVerticalView.heightAnchor.constraint(equalToConstant: currentCell.viewHeight).isActive = true
         return cell
     }
 }
@@ -263,6 +279,35 @@ extension PrecipitationView: HourlyWeatherManagerDelegate {
             self.forecastFutureDaysArray.append(ForecastTableViewDataModel(date: weather.futureSHortDates(timeInterval: weather.days[4].dayDate), time: weather.days[4].timeIntervals[7], weatherImage: weather.days[4].weatherImage(ElementNumber: 7), weatherConditionName: weather.days[4].hourlyWeatherConditionName[7], windSpeed: "wind - " + weather.doubleToRoundedString(value: weather.days[4].hourlyWindSpeed[7]) + " m/s", minTemp: weather.doubleToRoundedString(value: weather.days[4].minHourlyTemp[7]), maxTemp: weather.doubleToRoundedString(value: weather.days[4].maxHourlyTemp[7]), humiditi: "\(weather.days[4].hourlyHumidityValues[7])%"))
             
             self.precipitationTableView.reloadData()
+            
+            
+            
+            
+            self.daysHumiditiValuesArra = []
+            
+            let firstDayHumiditi = (weather.days[0].hourlyHumidityValues[0] + weather.days[0].hourlyHumidityValues[1] + weather.days[0].hourlyHumidityValues[2] + weather.days[0].hourlyHumidityValues[3] + weather.days[0].hourlyHumidityValues[4] + weather.days[0].hourlyHumidityValues[5] + weather.days[0].hourlyHumidityValues[6] + weather.days[0].hourlyHumidityValues[7]) / 8
+            
+            let secondDayHumiditi = (weather.days[1].hourlyHumidityValues[0] + weather.days[1].hourlyHumidityValues[1] + weather.days[1].hourlyHumidityValues[2] + weather.days[1].hourlyHumidityValues[3] + weather.days[1].hourlyHumidityValues[4] + weather.days[1].hourlyHumidityValues[5] + weather.days[1].hourlyHumidityValues[6] + weather.days[1].hourlyHumidityValues[7]) / 8
+            
+            let thirdDayHumiditi = (weather.days[2].hourlyHumidityValues[0] + weather.days[2].hourlyHumidityValues[1] + weather.days[2].hourlyHumidityValues[2] + weather.days[2].hourlyHumidityValues[3] + weather.days[2].hourlyHumidityValues[4] + weather.days[2].hourlyHumidityValues[5] + weather.days[2].hourlyHumidityValues[6] + weather.days[2].hourlyHumidityValues[7]) / 8
+            
+            let fourthDayHumiditi = (weather.days[3].hourlyHumidityValues[0] + weather.days[3].hourlyHumidityValues[1] + weather.days[3].hourlyHumidityValues[2] + weather.days[3].hourlyHumidityValues[3] + weather.days[3].hourlyHumidityValues[4] + weather.days[3].hourlyHumidityValues[5] + weather.days[3].hourlyHumidityValues[6] + weather.days[3].hourlyHumidityValues[7]) / 8
+            
+            let lastDayHumiditi = (weather.days[4].hourlyHumidityValues[0] + weather.days[4].hourlyHumidityValues[1] + weather.days[4].hourlyHumidityValues[2] + weather.days[4].hourlyHumidityValues[3] + weather.days[4].hourlyHumidityValues[4] + weather.days[4].hourlyHumidityValues[5] + weather.days[4].hourlyHumidityValues[6] + weather.days[4].hourlyHumidityValues[7]) / 8
+            
+            self.daysHumiditiValuesArra.append(PrecipitationCollectionDataModel(date: weather.futureSHortDates(timeInterval: weather.days[0].dayDate), viewHeight: self.fetchViewHeight(currentPercentage: firstDayHumiditi), progressValue: firstDayHumiditi))
+            
+            self.daysHumiditiValuesArra.append(PrecipitationCollectionDataModel(date: weather.futureSHortDates(timeInterval: weather.days[1].dayDate), viewHeight: self.fetchViewHeight(currentPercentage: secondDayHumiditi), progressValue: secondDayHumiditi))
+            
+            self.daysHumiditiValuesArra.append(PrecipitationCollectionDataModel(date: weather.futureSHortDates(timeInterval: weather.days[2].dayDate), viewHeight: self.fetchViewHeight(currentPercentage: thirdDayHumiditi), progressValue: thirdDayHumiditi))
+            
+            self.daysHumiditiValuesArra.append(PrecipitationCollectionDataModel(date: weather.futureSHortDates(timeInterval: weather.days[3].dayDate), viewHeight: self.fetchViewHeight(currentPercentage: fourthDayHumiditi), progressValue: fourthDayHumiditi))
+            
+            self.daysHumiditiValuesArra.append(PrecipitationCollectionDataModel(date: weather.futureSHortDates(timeInterval: weather.days[4].dayDate), viewHeight: self.fetchViewHeight(currentPercentage: lastDayHumiditi), progressValue: lastDayHumiditi))
+            
+          
+            self.precipitationCollectioView.reloadData()
+            self.precipitationCollectioView.updateConstraints()
         }
     }
     
