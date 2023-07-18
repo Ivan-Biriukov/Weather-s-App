@@ -1,7 +1,14 @@
 import UIKit
 import BonsaiController
+import CoreLocation
 
 class MainViewController: UIViewController {
+    
+    var weatherManager = WeatherManager()
+    let locationManager = CLLocationManager()
+    
+    var latitude : CLLocationDegrees?
+    var longitude : CLLocationDegrees?
     
     // MARK: - UI Elements
     
@@ -19,9 +26,10 @@ class MainViewController: UIViewController {
         return btn
     }()
     
-    private lazy var threeDotsButton : UIButton = {
+    private lazy var locationButton : UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(named: K.NavigationBar.threeDotsButton)!, for: .normal)
+        btn.setImage(UIImage(systemName: "location.north"), for: .normal)
+        btn.addTarget(self, action: #selector(locationButtonTaped), for: .touchUpInside)
         btn.tintColor = .white
         return btn
     }()
@@ -77,6 +85,10 @@ class MainViewController: UIViewController {
         configureSearchBar()
         hideKeyboardWhenTappedAround()
         contentScrollView.delegate = self
+        weatherManager.delegate = self
+        currentDate()
+        setupLocationManager()
+        locationManager.requestLocation()
     }
     
     // MARK: - Custom Buttons Methods
@@ -88,6 +100,11 @@ class MainViewController: UIViewController {
         self.present(popupVC, animated: true)
     }
     
+    @objc func locationButtonTaped() {
+        todayView.locationManager.requestLocation()
+        locationManager.requestLocation()
+    }
+    
     @objc func todayButtonTaped(_ sender: UIButton) {
         configureTodayView(isHiden: false)
         configureForecastView(isHiden: true)
@@ -96,6 +113,7 @@ class MainViewController: UIViewController {
         changeButtonsTitleStyle(titleText: "Today", button: sender, selected: true)
         changeButtonsTitleStyle(titleText: "Forecast", button: forecastButton, selected: false)
         changeButtonsTitleStyle(titleText: "Precipitation", button: precipitationButton, selected: false)
+        todayView.setupCurrentTimeLabelValue()
     }
     
     @objc func forecastButtonTaped(_ sender: UIButton) {
@@ -142,7 +160,7 @@ class MainViewController: UIViewController {
         self.navigationItem.titleView = searchBar
         let accountButtonLeft = UIBarButtonItem(customView: accountButton)
         self.navigationItem.leftBarButtonItem = accountButtonLeft
-        let rightBarButton = UIBarButtonItem(customView: threeDotsButton)
+        let rightBarButton = UIBarButtonItem(customView: locationButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
     }
     
@@ -154,6 +172,21 @@ class MainViewController: UIViewController {
         let dismissIcon = UIImage(systemName: "xmark.circle")
         dismissIcon!.withTintColor(UIColor.systemRed)
         searchBar.setImage(dismissIcon, for: .clear, state: .normal)
+    }
+    
+    private func currentDate() {
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .medium
+        let dateString = formatter.string(from: currentDate)
+        self.todayView.dateLabel.text = dateString
+    }
+    
+    private func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
     private func setupConstraints() {
@@ -248,8 +281,27 @@ class MainViewController: UIViewController {
 extension MainViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.searchTextField.text {
+            weatherManager.fetchWeather(cityName: text)
+            todayView.hourlyWeatherManager.fetchWeather(cityName: text)
+            todayView.setupCurrentTimeLabelValue()
+            forecastView.hourlyWeatherManager.fetchWeather(cityName: text)
+            precipitationView.hourlyWeatherManager.fetchWeather(cityName: text)
+        }
         searchBar.resignFirstResponder()
     }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if let text = searchBar.searchTextField.text {
+            weatherManager.fetchWeather(cityName: text)
+            todayView.hourlyWeatherManager.fetchWeather(cityName: text)
+            todayView.setupCurrentTimeLabelValue()
+            forecastView.hourlyWeatherManager.fetchWeather(cityName: text)
+            precipitationView.hourlyWeatherManager.fetchWeather(cityName: text)
+        }
+    }
+    
+    
 }
 
 // MARK: - ScrollView Delegate
@@ -274,3 +326,55 @@ extension MainViewController: BonsaiControllerDelegate {
         return BonsaiController(fromDirection: .left, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
     }
 }
+
+// MARK: - WeatherManager Delegate
+
+extension MainViewController: WeatherManagerDelegate {
+
+    func didUpdateWeather(weatherManager: WeatherManager, weather: WeatherModel){ //
+
+        DispatchQueue.main.async {
+            self.todayView.tempValueLabel.text = weather.temperatureString
+            
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.dailyMiddleTempLabel, grayText: "\(weather.minTempString)° /\(weather.maxTempString)°", whiteText: "  feels like: \(weather.feelLikeTempString)°C")
+            
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.windSpeedLabel, grayText: "Wind speed:  ", whiteText: "\(weather.windSpeedString) M/S")
+            self.todayView.weatherShortDescriptionLabel.text = weather.conditionName
+            self.todayView.wheaterImageView.image = weather.weatherImage
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.humidityLabel, grayText: "Humidity: ", whiteText:" \(weather.humidityPercentString)")
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.windLabel, grayText: "Wind: ", whiteText: "\(weather.windSpeedString) m/s")
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.sunsetLabel, grayText: "Sunset: ", whiteText: weather.timeStringFromUnixTime(timeInterval: weather.sunset))
+            self.todayView.feelsLikeAtributtedString(forLAbel: self.todayView.probabilityOfPrecipitationLabel, grayText: "Precipitation: ", whiteText: weather.precipitationPrecentage())
+            self.todayView.airPressureCurrentIndexValue.text = weather.pressureToString
+            
+            self.todayView.airPressureProgressView.progress = Float(900) / Float(weather.pressure)
+        }
+
+    }
+
+    func didFailWIthError(error: Error) {
+        print(error)
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+extension MainViewController: CLLocationManagerDelegate{
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            self.longitude = lon
+            self.latitude = lat
+            weatherManager.fetchWeather(longitude: lon, latitude: lat)
+            HourlyWeatherManager().fetchWeather(longitude: lon, latitude: lat)
+            forecastView.hourlyWeatherManager.fetchWeather(longitude: lon, latitude: lat)
+            precipitationView.hourlyWeatherManager.fetchWeather(longitude: lon, latitude: lat)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+}
+

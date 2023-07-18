@@ -2,6 +2,18 @@ import UIKit
 
 class ForecastTableViewCell: UITableViewCell {
     
+    var cellData : ForecastTableViewDataModel? {
+        didSet {
+            self.weekDayLabel.text = cellData?.date
+            self.dayDateLabel.text = cellData?.time
+            self.weatherConditionImg.image = cellData?.weatherImage
+            self.weatherConditionNameLabel.text = cellData?.weatherConditionName
+            self.windInfoLabel.text = cellData?.windSpeed
+            self.temperatureLabel.text = "\(cellData!.minTemp)° / \(cellData!.maxTemp)°"
+            self.humidityValueLabel.text = cellData?.humiditi
+        }
+    }
+    
     private let weekDayLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsMedium12()

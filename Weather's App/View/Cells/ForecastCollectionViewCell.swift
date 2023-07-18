@@ -4,6 +4,15 @@ import UIKit
 
 class ForecastCollectionViewCell: UICollectionViewCell {
     
+    var cellData : ForecastColletionDataModel? {
+        didSet {
+            self.wheatherConditionImg.image = cellData?.conditionImg
+            self.dateLabel.text = cellData?.date
+            self.timeLabel.text = cellData?.time
+            self.temperatureLabel.text = cellData?.temp
+        }
+    }
+    
     private let wheatherConditionImg : UIImageView = {
         let img = UIImageView(image: UIImage(named: K.WheatherConditionsImages.storm))
         img.contentMode = .scaleAspectFill
@@ -13,22 +22,22 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         return img
     }()
     
-    private let dayOfTheWeakLabel : UILabel = {
+    private let dateLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular10()
         lb.textColor = .darkGrayText
         lb.textAlignment = .center
-        lb.text = "SUN"
+        lb.text = "18.04"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private let dayDateLabel : UILabel = {
+    private let timeLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular8()
         lb.textColor = .darkGrayText
         lb.textAlignment = .center
-        lb.text = "18.04"
+        lb.text = "18:04"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -69,19 +78,19 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 20
         
         contentView.addSubview(wheatherConditionImg)
-        contentView.addSubview(dayOfTheWeakLabel)
-        contentView.addSubview(dayDateLabel)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(timeLabel)
         contentView.addSubview(temperatureLabel)
 
         NSLayoutConstraint.activate([
             wheatherConditionImg.topAnchor.constraint(equalTo: contentView.topAnchor),
             wheatherConditionImg.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            dayOfTheWeakLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            dayOfTheWeakLabel.topAnchor.constraint(equalTo: wheatherConditionImg.bottomAnchor, constant: 7),
-            dayDateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            dayDateLabel.topAnchor.constraint(equalTo: dayOfTheWeakLabel.bottomAnchor, constant: 5),
+            dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            dateLabel.topAnchor.constraint(equalTo: wheatherConditionImg.bottomAnchor, constant: 7),
+            timeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            timeLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
             temperatureLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            temperatureLabel.topAnchor.constraint(equalTo: dayDateLabel.bottomAnchor, constant: 6),
+            temperatureLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 6),
         ])
     }
 }

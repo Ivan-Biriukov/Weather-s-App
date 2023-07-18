@@ -1,6 +1,7 @@
 import Foundation
 
 struct K {
+    static let apiKey : String = "48c416dce3eb3c49c52da05f47b1c033"
     
     struct Onboarding {
         static let moonImg = "MoonLogo"
@@ -48,4 +49,5 @@ struct K {
     struct Images {
         static let locationImg : String = "Shape"
     }
+    
 }

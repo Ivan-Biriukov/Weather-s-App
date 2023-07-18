@@ -2,6 +2,14 @@ import UIKit
 
 class WheaterHourlyCollectionViewCell: UICollectionViewCell {
     
+    var cellData : WheaterHourlyCollectionModel? {
+        didSet {
+            timeLabel.text = cellData?.timeValue
+            wheatherConditionImg.image = cellData?.weatherConditionImg
+            temperatureLabel.text = cellData?.getRoundedTempValueString()
+        }
+    }
+    
     private let timeLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular8()

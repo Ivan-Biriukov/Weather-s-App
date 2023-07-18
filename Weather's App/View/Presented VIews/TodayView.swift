@@ -1,11 +1,37 @@
 import UIKit
+import CoreLocation
 
 class TodayView: UIView {
     
     private let currentWidht = UIScreen.main.bounds.width
     
-    // MARK: - UI Elements
+    var hourlyWeatherManager = HourlyWeatherManager()
+    let locationManager = CLLocationManager()
     
+    var hourlyWheaterCollectionDataArray : [WheaterHourlyCollectionModel] = [
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0),
+        .init(timeValue: "-:-", weatherConditionImg: UIImage(systemName: "sun.max.trianglebadge.exclamationmark.fill")!, tempValueLabel: 0.0)
+    ]
+    
+    var dailyTableViewArray : [DailyTableViewDataModel] = [
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0),
+        .init(date: "Today", weatherConditionImage: UIImage(named: K.WheatherConditionsImages.sunnny)!, minTempValue: 0.0, maxTempvalue: 0.0)
+    ]
+    
+    
+    var currentTimeString = ""
+    var finishTimeString = ""
+    
+    // MARK: - UI Elements
                                         // Header Section
     
     private let dateBubleView : UIView = {
@@ -18,7 +44,7 @@ class TodayView: UIView {
         return view
     }()
     
-    private let dateLabel : UILabel = {
+    let dateLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -28,7 +54,7 @@ class TodayView: UIView {
         return lb
     }()
     
-    private let wheaterImageView : UIImageView = {
+    let wheaterImageView : UIImageView = {
         let img = UIImageView()
         img.widthAnchor.constraint(equalToConstant: 120).isActive = true
         img.heightAnchor.constraint(equalToConstant: 120).isActive = true
@@ -38,7 +64,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let tempValueLabel : GradientLabel = {
+    let tempValueLabel : GradientLabel = {
         let lb = GradientLabel()
         lb.font = .poppinsTemp()
         lb.text = "33°"
@@ -47,7 +73,7 @@ class TodayView: UIView {
         return lb
     }()
     
-    private let weatherShortDescriptionLabel : UILabel = {
+    let weatherShortDescriptionLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -61,7 +87,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fill
-        stack.alignment = .leading
+        stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -74,7 +100,7 @@ class TodayView: UIView {
         return stack
     }()
     
-    private let dailyMiddleTempLabel: UILabel = {
+    let dailyMiddleTempLabel: UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -83,16 +109,7 @@ class TodayView: UIView {
         return lb
     }()
     
-    private let separateVerticalLine : UIView = {
-        let view = UIView()
-        view.backgroundColor = .darkGrayText
-        view.heightAnchor.constraint(equalToConstant: 14).isActive = true
-        view.widthAnchor.constraint(equalToConstant: 2).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let windSpeedLabel = {
+    let windSpeedLabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -104,7 +121,7 @@ class TodayView: UIView {
     private let secondLineStack : UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .equalSpacing
+        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -121,7 +138,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let probabilityOfPrecipitationLabel : UILabel = {
+     let probabilityOfPrecipitationLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -134,7 +151,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 11
+        stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -148,7 +165,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let humidityLabel : UILabel = {
+    let humidityLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -161,7 +178,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 11
+        stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -183,7 +200,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let windLabel : UILabel = {
+    let windLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -196,7 +213,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 11
+        stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -210,7 +227,7 @@ class TodayView: UIView {
         return img
     }()
     
-    private let sunsetLabel : UILabel = {
+     let sunsetLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textAlignment = .center
@@ -223,7 +240,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 11
+        stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -236,7 +253,7 @@ class TodayView: UIView {
         return stack
     }()
     
-    private let hourlyWheaterCollection : UICollectionView = {
+    let hourlyWheaterCollection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 46, height: 100)
@@ -402,7 +419,7 @@ class TodayView: UIView {
         lb.font = .poppinsMedium12()
         lb.textColor = .white
         lb.textAlignment = .center
-        lb.text = "Low 0"
+        lb.text = "Unknown"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -417,22 +434,22 @@ class TodayView: UIView {
     }()
     
     
-    private let detailDewpointLabel : UILabel = {
+    private let detailPopulationLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textColor = .lightGrayText
         lb.textAlignment = .center
-        lb.text = "Dew point"
+        lb.text = "Population"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private let detailDewpointValueLabel : UILabel = {
+    private let detailPopulationValueLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsMedium12()
         lb.textColor = .white
         lb.textAlignment = .center
-        lb.text = "56°"
+        lb.text = "5654"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -450,7 +467,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fill
-        stack.alignment = .center
+        stack.alignment = .leading
         stack.spacing = 15
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -469,7 +486,7 @@ class TodayView: UIView {
     
                                     // Air Quelity Section
     
-    private let airQuelityContainer : UIView = {
+    private let pressureContainer : UIView = {
         let view = UIView()
         view.backgroundColor = .additionalViewBackground
         view.clipsToBounds = false
@@ -483,17 +500,17 @@ class TodayView: UIView {
         return view
     }()
     
-    private let airQuelityMainTitle : UILabel = {
+    private let airPressureMainTitle : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsSemiBold14()
         lb.textColor = .white
         lb.textAlignment = .left
-        lb.text = "Air Quality"
+        lb.text = "Air Pressure"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private lazy var airQuelityInfoButton : UIButton = {
+    private lazy var airPressureInfoButton : UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "info.circle"), for: .normal)
         btn.tintColor = .white
@@ -503,7 +520,7 @@ class TodayView: UIView {
         return btn
     }()
     
-    private let airQuelityTitleStack : UIStackView = {
+    private let airPressureTitleStack : UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .equalSpacing
@@ -511,29 +528,29 @@ class TodayView: UIView {
         return stack
     }()
     
-    private let airQuelityProgressView = CircularProgressView(frame: CGRect(x: 0, y: 0, width: 110, height: 110),lineWidth: 5, rounded: true)
+    let airPressureProgressView = CircularProgressView(frame: CGRect(x: 0, y: 0, width: 110, height: 110),lineWidth: 5, rounded: true)
     
-    private let airQuelityProgressMinValue : UILabel = {
+    private let airPressureProgressMinValue : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular8()
         lb.textColor = .darkGrayText
         lb.textAlignment = .left
-        lb.text = "0"
+        lb.text = "600"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private let airQuelityProgressMaxValue : UILabel = {
+    private let airPressureProgressMaxValue : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular8()
         lb.textColor = .darkGrayText
         lb.textAlignment = .left
-        lb.text = "500"
+        lb.text = "900"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    private let airQuelityCurrentIndexValue : UILabel = {
+    let airPressureCurrentIndexValue : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsSemiBold28()
         lb.textColor = .white
@@ -543,13 +560,13 @@ class TodayView: UIView {
         return lb
     }()
     
-    private let airQuelityComentLabel : UILabel = {
+    private let airPressureComentLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsLight10()
         lb.textColor = .lightGrayText
         lb.textAlignment = .left
         lb.numberOfLines = 0
-        lb.text = "You have good air quality - enjoy your outdoor activities."
+        lb.text = "A person feels most comfortable if the barometric pressure is 760 mm Hg. pillar. Slight deviations of 10 mm cannot affect your well-being."
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -681,23 +698,26 @@ class TodayView: UIView {
         return lb
     }()
     
-    
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        hourlyWeatherManager.delegate = self
         conffigure()
         setupConstraints()
         setupDifferentColorsForLabels()
         addDashedBorder(startX: 15, startY: 220, endX: Int(self.bounds.width) - 20, endY: 220)
         setupCollection()
         setupTableView()
-        airQuelityProgressView.translatesAutoresizingMaskIntoConstraints = false
+        airPressureProgressView.translatesAutoresizingMaskIntoConstraints = false
         setupairQuelityProgressView()
-        airQuelityContainer.addDashedBorder(startX: 15, startY: 150, endX: Int(self.bounds.width) - 35, endY: 150)
+        pressureContainer.addDashedBorder(startX: 15, startY: 150, endX: Int(self.bounds.width) - 35, endY: 150)
         setupSunMoonWayView()
-        
+        setupCurrentTimeLabelValue()
         adaptiveUI()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
     required init?(coder: NSCoder) {
@@ -705,6 +725,26 @@ class TodayView: UIView {
     }
     
     // MARK: - Configure Section
+    
+    func setupCurrentTimeLabelValue() {
+        let date = NSDate()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let time = dateFormatter.string(from: date as Date)
+        self.currentTimeValueLabel.text = time
+    }
+    
+    func fetchSunProgress(currentTime: String, sunsetTime: String) {
+        if currentTime != "" && sunsetTime != "" {
+            let endTime = Float(sunsetTime[0] + sunsetTime[1] + "." + sunsetTime[5] + sunsetTime[6])
+            let nowTime = Float(currentTime[0] + currentTime[1] + "." + currentTime[3] + currentTime[4])
+            if let saveNow = nowTime, let saveEnd = endTime {
+                let result = saveNow / saveEnd
+                self.sunMoonWayView.progress = result
+            }
+        }
+    }
+    
     
     private func conffigure() {
         addSubview(dateBubleView)
@@ -716,7 +756,6 @@ class TodayView: UIView {
         temperatureStack.addArrangedSubview(weatherShortDescriptionLabel)
         addSubview(secondLineStack)
         secondLineStack.addArrangedSubview(dailyMiddleTempLabel)
-        secondLineStack.addArrangedSubview(separateVerticalLine)
         secondLineStack.addArrangedSubview(windSpeedLabel)
         addSubview(firstGroupStack)
         firstGroupStack.addArrangedSubview(precipitationStack)
@@ -751,19 +790,19 @@ class TodayView: UIView {
         detailsFourthLaneStack.addArrangedSubview(detailUVIndexLabel)
         detailsFourthLaneStack.addArrangedSubview(detailUVIndexValueLabel)
         detailsMainRightStack.addArrangedSubview(detailsFifthLaneStack)
-        detailsFifthLaneStack.addArrangedSubview(detailDewpointLabel)
-        detailsFifthLaneStack.addArrangedSubview(detailDewpointValueLabel)
+        detailsFifthLaneStack.addArrangedSubview(detailPopulationLabel)
+        detailsFifthLaneStack.addArrangedSubview(detailPopulationValueLabel)
         detailsContainer.addSubview(detailDescriptionLabel)
-        addSubview(airQuelityContainer)
-        airQuelityContainer.addSubview(airQuelityTitleStack)
-        airQuelityTitleStack.addArrangedSubview(airQuelityMainTitle)
-        airQuelityTitleStack.addArrangedSubview(airQuelityInfoButton)
-        airQuelityContainer.addSubview(airQuelityProgressView)
-        airQuelityContainer.addSubview(airQuelityProgressMinValue)
-        airQuelityContainer.addSubview(airQuelityProgressMaxValue)
-        airQuelityContainer.addSubview(airQuelityCurrentIndexValue)
-        airQuelityContainer.addSubview(airQuelityComentLabel)
-        airQuelityContainer.addSubview(airQuelityBottomStack)
+        addSubview(pressureContainer)
+        pressureContainer.addSubview(airPressureTitleStack)
+        airPressureTitleStack.addArrangedSubview(airPressureMainTitle)
+        airPressureTitleStack.addArrangedSubview(airPressureInfoButton)
+        pressureContainer.addSubview(airPressureProgressView)
+        pressureContainer.addSubview(airPressureProgressMinValue)
+        pressureContainer.addSubview(airPressureProgressMaxValue)
+        pressureContainer.addSubview(airPressureCurrentIndexValue)
+        pressureContainer.addSubview(airPressureComentLabel)
+        pressureContainer.addSubview(airQuelityBottomStack)
         airQuelityBottomStack.addArrangedSubview(usEpaAqiLabel)
         airQuelityBottomStack.addArrangedSubview(dominantPollutantLabel)
         
@@ -794,7 +833,7 @@ class TodayView: UIView {
             
             secondLineStack.topAnchor.constraint(equalTo: firstLineStack.bottomAnchor, constant: 15),
             secondLineStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            secondLineStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            secondLineStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             
             firstGroupStack.topAnchor.constraint(equalTo: secondLineStack.bottomAnchor, constant: 45),
             
@@ -827,29 +866,29 @@ class TodayView: UIView {
             detailDescriptionLabel.trailingAnchor.constraint(equalTo: detailsContainer.trailingAnchor, constant: -25),
             detailDescriptionLabel.topAnchor.constraint(equalTo: detailsMainRightStack.bottomAnchor, constant: 40),
             
-            airQuelityContainer.heightAnchor.constraint(equalToConstant: 200),
-            airQuelityContainer.topAnchor.constraint(equalTo: detailsContainer.bottomAnchor, constant: 20),
-            airQuelityContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            airQuelityContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            airQuelityTitleStack.topAnchor.constraint(equalTo: airQuelityContainer.topAnchor, constant: 10),
-            airQuelityTitleStack.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 22),
-            airQuelityTitleStack.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -22),
-            airQuelityProgressView.topAnchor.constraint(equalTo: airQuelityTitleStack.bottomAnchor, constant: 18),
-            airQuelityProgressView.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 22),
+            pressureContainer.heightAnchor.constraint(equalToConstant: 200),
+            pressureContainer.topAnchor.constraint(equalTo: detailsContainer.bottomAnchor, constant: 20),
+            pressureContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            pressureContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            airPressureTitleStack.topAnchor.constraint(equalTo: pressureContainer.topAnchor, constant: 10),
+            airPressureTitleStack.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 22),
+            airPressureTitleStack.trailingAnchor.constraint(equalTo: pressureContainer.trailingAnchor, constant: -22),
+            airPressureProgressView.topAnchor.constraint(equalTo: airPressureTitleStack.bottomAnchor, constant: 18),
+            airPressureProgressView.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 22),
             
-            airQuelityProgressMinValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 80),
-            airQuelityProgressMinValue.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 30),
-            airQuelityProgressMaxValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 80),
-            airQuelityProgressMaxValue.leadingAnchor.constraint(equalTo: airQuelityProgressMinValue.trailingAnchor, constant: 72.5),
-            airQuelityCurrentIndexValue.topAnchor.constraint(equalTo: airQuelityProgressView.bottomAnchor, constant: 17),
-            airQuelityCurrentIndexValue.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 57),
-            airQuelityComentLabel.topAnchor.constraint(equalTo: airQuelityTitleStack.bottomAnchor, constant: 51),
-            airQuelityComentLabel.leadingAnchor.constraint(equalTo: airQuelityProgressMaxValue.trailingAnchor, constant: 25),
-            airQuelityComentLabel.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -20),
-            airQuelityBottomStack.leadingAnchor.constraint(equalTo: airQuelityContainer.leadingAnchor, constant: 18),
-            airQuelityBottomStack.trailingAnchor.constraint(equalTo: airQuelityContainer.trailingAnchor, constant: -18),
+            airPressureProgressMinValue.topAnchor.constraint(equalTo: airPressureProgressView.bottomAnchor, constant: 80),
+            airPressureProgressMinValue.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 30),
+            airPressureProgressMaxValue.topAnchor.constraint(equalTo: airPressureProgressView.bottomAnchor, constant: 80),
+            airPressureProgressMaxValue.leadingAnchor.constraint(equalTo: airPressureProgressMinValue.trailingAnchor, constant: 65),
+            airPressureCurrentIndexValue.topAnchor.constraint(equalTo: airPressureProgressView.bottomAnchor, constant: 30),
+            airPressureCurrentIndexValue.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 52),
+            airPressureComentLabel.topAnchor.constraint(equalTo: airPressureTitleStack.bottomAnchor, constant: 31),
+            airPressureComentLabel.leadingAnchor.constraint(equalTo: airPressureProgressMaxValue.trailingAnchor, constant: 25),
+            airPressureComentLabel.trailingAnchor.constraint(equalTo: pressureContainer.trailingAnchor, constant: -20),
+            airQuelityBottomStack.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 18),
+            airQuelityBottomStack.trailingAnchor.constraint(equalTo: pressureContainer.trailingAnchor, constant: -18),
             
-            sunPhasesContainer.topAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: 20),
+            sunPhasesContainer.topAnchor.constraint(equalTo: pressureContainer.bottomAnchor, constant: 20),
             sunPhasesContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             sunPhasesContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             sunPhasesContainer.heightAnchor.constraint(equalToConstant: 180),
@@ -863,10 +902,10 @@ class TodayView: UIView {
             sunSetVerticalStack.trailingAnchor.constraint(equalTo: sunPhasesContainer.trailingAnchor, constant: -22),
             
             sunMoonWayView.topAnchor.constraint(equalTo: sunPhasesContainer.topAnchor, constant: 41),
-            sunMoonWayView.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 45),
+            sunMoonWayView.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 55),
             
             currentTimeValueLabel.topAnchor.constraint(equalTo: sunPhasesContainer.topAnchor, constant: 70),
-            currentTimeValueLabel.centerXAnchor.constraint(equalTo: sunPhasesContainer.centerXAnchor),
+            currentTimeValueLabel.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 77)
 
         ])
     }
@@ -878,8 +917,8 @@ class TodayView: UIView {
         feelsLikeAtributtedString(forLAbel: humidityLabel, grayText: "Humidity: ", whiteText: "59%")
         feelsLikeAtributtedString(forLAbel: windLabel, grayText: "Wind: ", whiteText: "10 km/h")
         feelsLikeAtributtedString(forLAbel: sunsetLabel, grayText: "Sunset: ", whiteText: "18:34")
-        feelsLikeAtributtedString(forLAbel: usEpaAqiLabel, grayText: "US EPA AQI ", whiteText: " 49/500")
-        feelsLikeAtributtedString(forLAbel: dominantPollutantLabel, grayText: "Dominant pollutant ", whiteText: " PM 10")
+        feelsLikeAtributtedString(forLAbel: usEpaAqiLabel, grayText: "Historic low ", whiteText: " 654")
+        feelsLikeAtributtedString(forLAbel: dominantPollutantLabel, grayText: "All-time high ", whiteText: " 812")
     }
     
     private func setupCollection() {
@@ -896,16 +935,16 @@ class TodayView: UIView {
     }
     
     private func setupairQuelityProgressView() {
-        airQuelityProgressView.progress = 0.8
+        airPressureProgressView.progress = 0.8
 
-        if airQuelityProgressView.progress <= 0.30 {
-            airQuelityProgressView.progressColor = .green
-        } else if airQuelityProgressView.progress <= 0.50 {
-            airQuelityProgressView.progressColor = .yellow
-        } else if airQuelityProgressView.progress > 0.50{
-            airQuelityProgressView.progressColor = .red
+        if airPressureProgressView.progress <= 0.30 {
+            airPressureProgressView.progressColor = .green
+        } else if airPressureProgressView.progress <= 0.50 {
+            airPressureProgressView.progressColor = .yellow
+        } else if airPressureProgressView.progress > 0.50{
+            airPressureProgressView.progressColor = .red
         }
-        airQuelityProgressView.trackColor = .lightGray
+        airPressureProgressView.trackColor = .lightGray
     }
     
     private func setupSunMoonWayView() {
@@ -926,21 +965,21 @@ class TodayView: UIView {
                 firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
                 secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
                 secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-                airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor)
+                airQuelityBottomStack.bottomAnchor.constraint(equalTo: pressureContainer.bottomAnchor)
             ])
             secondGroupStack.distribution = .fill
             secondGroupStack.spacing = 90
             airQuelityBottomStack.axis = .vertical
         } else {
-            secondLineStack.distribution = .equalSpacing
+            secondLineStack.distribution = .fill
             firstGroupStack.distribution = .equalSpacing
             secondGroupStack.distribution = .equalSpacing
             NSLayoutConstraint.activate([
-                firstGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
-                firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -55),
-                secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 35),
-                secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -55),
-                airQuelityBottomStack.bottomAnchor.constraint(equalTo: airQuelityContainer.bottomAnchor, constant: -14),
+                firstGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+                firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+                secondGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+                secondGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+                airQuelityBottomStack.bottomAnchor.constraint(equalTo: pressureContainer.bottomAnchor, constant: -14),
             ])
             airQuelityBottomStack.axis = .horizontal
         }
@@ -954,12 +993,15 @@ class TodayView: UIView {
 extension TodayView : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return hourlyWheaterCollectionDataArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourleWheaterCell", for: indexPath) as! WheaterHourlyCollectionViewCell
+        let currentItem = hourlyWheaterCollectionDataArray[indexPath.row]
+        
+        cell.cellData = currentItem
         
         return cell
     }
@@ -971,7 +1013,7 @@ extension TodayView : UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return dailyTableViewArray.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -981,8 +1023,9 @@ extension TodayView : UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         } else {
-            
             let cell = dailyTepmTable.dequeueReusableCell(withIdentifier: "dailyTempTableCell", for: indexPath) as! DailyWeatherTableViewCell
+            let currentItem = dailyTableViewArray[indexPath.row - 1 ]
+            cell.cellData = currentItem
             cell.selectionStyle = .none
             return cell
         }
@@ -995,3 +1038,104 @@ extension TodayView : UITableViewDelegate, UITableViewDataSource {
     
 }
 
+// MARK: - HourlyWeatherManagerDelegate
+
+extension TodayView: HourlyWeatherManagerDelegate {
+    
+    func didUpdateWeather(weatherManager: HourlyWeatherManager, weather: DailyWeatherModel) {
+        
+        DispatchQueue.main.async {
+            self.hourlyWheaterCollectionDataArray = []
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[0], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 0), tempValueLabel: weather.days[0].HourlyTemp[0]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[1], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 1), tempValueLabel: weather.days[0].HourlyTemp[1]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[2], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 2), tempValueLabel: weather.days[0].HourlyTemp[2]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[3], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 3), tempValueLabel: weather.days[0].HourlyTemp[3]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[4], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 4), tempValueLabel: weather.days[0].HourlyTemp[4]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[5], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 5), tempValueLabel: weather.days[0].HourlyTemp[5]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[6], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 6), tempValueLabel: weather.days[0].HourlyTemp[6]))
+            
+            self.hourlyWheaterCollectionDataArray.append(WheaterHourlyCollectionModel(timeValue: weather.days[0].timeIntervals[7], weatherConditionImg: weather.days[0].weatherImage(ElementNumber: 7), tempValueLabel: weather.days[0].HourlyTemp[7]))
+            
+            self.hourlyWheaterCollection.reloadData()
+            
+            self.dailyTableViewArray = []
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[0].todayStringDate(), weatherConditionImage: weather.days[0].weatherImage(ElementNumber: 4) , minTempValue: weather.days[0].minHourlyTemp[0], maxTempvalue: weather.days[0].maxHourlyTemp[5]))
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[1].futureDates(timeInterval: weather.days[1].dayDate), weatherConditionImage: weather.days[1].weatherImage(ElementNumber: 4) , minTempValue: weather.days[1].minHourlyTemp[0], maxTempvalue: weather.days[1].maxHourlyTemp[5]))
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[2].futureDates(timeInterval: weather.days[2].dayDate), weatherConditionImage: weather.days[2].weatherImage(ElementNumber: 4) , minTempValue: weather.days[2].minHourlyTemp[0], maxTempvalue: weather.days[2].maxHourlyTemp[5]))
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[3].futureDates(timeInterval: weather.days[3].dayDate), weatherConditionImage: weather.days[3].weatherImage(ElementNumber: 4) , minTempValue: weather.days[3].minHourlyTemp[0], maxTempvalue: weather.days[3].maxHourlyTemp[5]))
+            
+            self.dailyTableViewArray.append(DailyTableViewDataModel(date: weather.days[4].futureDates(timeInterval: weather.days[4].dayDate), weatherConditionImage: weather.days[4].weatherImage(ElementNumber: 4) , minTempValue: weather.days[4].minHourlyTemp[0], maxTempvalue: weather.days[4].maxHourlyTemp[5]))
+            
+            self.dailyTepmTable.reloadData()
+            
+            self.detailWeatherConditionImg.image = weather.days[0].weatherImage(ElementNumber: 4)
+            
+            let avarageFeelsTemp = weather.days[0].FeelsLikeHourleTemp.sum() / Double(weather.days[0].FeelsLikeHourleTemp.count)
+            
+            self.detailFeelsLikeValueLabel.text = weather.doubleToRoundedString(value: avarageFeelsTemp)
+            
+            let avarageHumiditi = weather.days[0].hourlyHumidityValues.sum() / weather.days[0].hourlyHumidityValues.count
+            
+            self.detailHumidityValueLabel.text = "\(avarageHumiditi)%"
+            
+            let avarageVisibility = (weather.days[0].visibiliti.sum() / weather.days[0].visibiliti.count) / 1000
+            
+            self.detailVisibilityValueLabel.text = "\(avarageVisibility) KM"
+            
+            self.detailPopulationValueLabel.text = "\(weather.population)"
+            
+            let averageWindSpeed = String(format: "%.2f", weather.days[0].hourlyWindSpeed.sum() / Double(weather.days[0].hourlyWindSpeed.count))
+            
+            self.detailDescriptionLabel.text = "Tonight in \(weather.cityName) - \(weather.days[0].hourlyWeatherConditionName[1]). Average Wind speed is equal to \(averageWindSpeed) m / s. Night temperature will be - \(weather.days[0].HourlyTemp[1]) temperature at the middle of day will be - \(weather.days[0].HourlyTemp[6])"
+            
+            
+            self.finishTimeString = weather.timeStringFromUnixTime(timeInterval: weather.sunsetTime)
+            
+            self.sunPhasesSunriseValueLabel.text = weather.timeStringFromUnixTime(timeInterval: weather.sunriseTime)
+            self.sunPhasesSunsetValueLabel.text = self.finishTimeString
+            
+            var currentTimeString : String {
+                let date = NSDate()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm"
+                let time = dateFormatter.string(from: date as Date)
+                return time
+            }
+            
+            self.currentTimeString = currentTimeString
+
+            self.fetchSunProgress(currentTime: self.currentTimeString, sunsetTime: self.finishTimeString)
+        }
+    }
+    
+    func didFailWIthError(error: Error) {
+        print(error)
+    }
+}
+
+extension TodayView: CLLocationManagerDelegate{
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            hourlyWeatherManager.fetchWeather(longitude: lon, latitude: lat)
+            
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+}
