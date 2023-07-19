@@ -211,17 +211,31 @@ extension PopupViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == locationsTableView {
-            context.delete(locationsArray[indexPath.row])
-            locationsArray.remove(at: indexPath.row)
-            tableView.reloadData()
-            self.saveItems()
-        }
+//        if tableView == locationsTableView {
+//            context.delete(locationsArray[indexPath.row])
+//            locationsArray.remove(at: indexPath.row)
+//            tableView.reloadData()
+//            self.saveItems()
+//        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 65
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            locationsTableView.beginUpdates()
+            context.delete(locationsArray[indexPath.row])
+            locationsArray.remove(at: indexPath.row)
+            locationsTableView.deleteRows(at: [indexPath], with: .fade)
+            locationsTableView.endUpdates()
+            saveItems()
+        }
     }
     
     
