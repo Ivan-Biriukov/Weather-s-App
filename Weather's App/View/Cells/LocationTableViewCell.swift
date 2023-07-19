@@ -13,7 +13,7 @@ class LocationTableViewCell: UITableViewCell {
         return img
     }()
 
-    private let cityNameLabel : UILabel = {
+   let cityNameLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsSemiBold14()
         lb.textColor = .white
@@ -23,7 +23,7 @@ class LocationTableViewCell: UITableViewCell {
         return lb
     }()
     
-    private let countyNameLabel : UILabel = {
+    let countyNameLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsSemiBold14()
         lb.textColor = .white
@@ -42,7 +42,7 @@ class LocationTableViewCell: UITableViewCell {
         return stack
     }()
     
-    private let temperatureLabel : UILabel = {
+    let temperatureLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textColor = .darkGrayText
@@ -52,7 +52,7 @@ class LocationTableViewCell: UITableViewCell {
         return lb
     }()
     
-    private let weatherConditionLabel : UILabel = {
+    let weatherConditionLabel : UILabel = {
         let lb = UILabel()
         lb.font = .poppinsRegular12()
         lb.textColor = .darkGrayText

@@ -1,14 +1,39 @@
 import UIKit
+import CoreData
 import BonsaiController
 import CoreLocation
 
 class MainViewController: UIViewController {
     
     var weatherManager = WeatherManager()
-    let locationManager = CLLocationManager()
     
+    // CoreLocation
+    let locationManager = CLLocationManager()
     var latitude : CLLocationDegrees?
     var longitude : CLLocationDegrees?
+    
+    // Core Data
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    func saveItems() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context \(error)")
+        }
+    }
+    
+    var locationsArray = [SavedLocations]()
+    
+    func loadItems() {
+        let request : NSFetchRequest<SavedLocations> = SavedLocations.fetchRequest()
+        do {
+            locationsArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+    }
+    
     
     // MARK: - UI Elements
     
@@ -348,8 +373,27 @@ extension MainViewController: WeatherManagerDelegate {
             self.todayView.airPressureCurrentIndexValue.text = weather.pressureToString
             
             self.todayView.airPressureProgressView.progress = Float(900) / Float(weather.pressure)
+            
+            self.loadItems()
+            
+            // Uniq location Saving to wathced locations
+            var result = [String]()
+             
+            for loc in self.locationsArray {
+                result.append(loc.cityName!)
+            }
+             
+            if result.contains(weather.cityName) {
+                print("Dublicate")
+            } else {
+                let newLocation = SavedLocations(context: self.context)
+                newLocation.cityName = weather.cityName
+                newLocation.countryName = weather.countryName
+                newLocation.currentTemp = weather.temperatureString
+                newLocation.weatherConditionName = weather.conditionName
+                self.saveItems()
+            }
         }
-
     }
 
     func didFailWIthError(error: Error) {

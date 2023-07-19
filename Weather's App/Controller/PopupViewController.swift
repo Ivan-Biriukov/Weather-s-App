@@ -1,13 +1,42 @@
-
-
 import UIKit
+import CoreData
 
 class PopupViewController: UIViewController {
+    
+    let mainVC = MainViewController()
+    let todayView = TodayView()
+    let forecastView = ForecastView()
+    let precipitationView = PrecipitationView()
+    
+    //CoreData
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+    func loadItems() {
+        let request : NSFetchRequest<SavedLocations> = SavedLocations.fetchRequest()
+        do {
+            locationsArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+    }
+    
+    func saveItems() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context \(error)")
+        }
+        self.locationsTableView.reloadData()
+    }
+    
+    private var locationsArray = [SavedLocations]()
     
     private let notificationDataArra : [[String]] = [
         ["Send feedback", "Rate this app", "Share your weather"],
         ["arrowshape.turn.up.backward.fill", "star.fill", "circle.hexagonpath.fill"]
     ]
+    
+    // MARK: - UI Elements
     
     private lazy var dismissButton : UIButton = {
         let btn = UIButton()
@@ -88,6 +117,11 @@ class PopupViewController: UIViewController {
         setupTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadItems()
+        self.locationsTableView.reloadData()
+    }
     
     // MARK: - COnfigure UI
     
@@ -155,7 +189,7 @@ extension PopupViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == locationsTableView {
-            return 2
+            return locationsArray.count
         } else {
             return 3
         }
@@ -165,7 +199,11 @@ extension PopupViewController: UITableViewDelegate, UITableViewDataSource {
         
         if tableView == locationsTableView{
             let cell = locationsTableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
-            
+            let currentCellData = locationsArray[indexPath.row]
+            cell.cityNameLabel.text = currentCellData.cityName
+            cell.countyNameLabel.text = currentCellData.countryName
+            cell.temperatureLabel.text = currentCellData.currentTemp
+            cell.weatherConditionLabel.text = currentCellData.weatherConditionName
             return cell
         } else {
             let cell = notificationsTableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
@@ -177,9 +215,27 @@ extension PopupViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 65
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            locationsTableView.beginUpdates()
+            context.delete(locationsArray[indexPath.row])
+            locationsArray.remove(at: indexPath.row)
+            locationsTableView.deleteRows(at: [indexPath], with: .fade)
+            locationsTableView.endUpdates()
+            saveItems()
+        }
     }
     
     
