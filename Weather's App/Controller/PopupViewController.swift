@@ -3,6 +3,11 @@ import CoreData
 
 class PopupViewController: UIViewController {
     
+    let mainVC = MainViewController()
+    let todayView = TodayView()
+    let forecastView = ForecastView()
+    let precipitationView = PrecipitationView()
+    
     //CoreData
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -211,12 +216,7 @@ extension PopupViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if tableView == locationsTableView {
-//            context.delete(locationsArray[indexPath.row])
-//            locationsArray.remove(at: indexPath.row)
-//            tableView.reloadData()
-//            self.saveItems()
-//        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
