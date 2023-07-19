@@ -45,6 +45,7 @@
 		57AADD512A563B9A002E5711 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57AADD502A563B9A002E5711 /* Assets.xcassets */; };
 		57AADD542A563B9A002E5711 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57AADD522A563B9A002E5711 /* LaunchScreen.storyboard */; };
 		57ABEFF22A585B2F0034F0BE /* SectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABEFF12A585B2F0034F0BE /* SectionButton.swift */; };
+		57B37B842A6761E80001CC97 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 57B37B822A6761E80001CC97 /* CoreDataModel.xcdatamodeld */; };
 		57B5937E2A573747000ADE4D /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5937D2A573747000ADE4D /* OnboardingCollectionViewCell.swift */; };
 		57B593802A5737F5000ADE4D /* OnboardingDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5937F2A5737F5000ADE4D /* OnboardingDataManager.swift */; };
 		57B593862A57728F000ADE4D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B593852A57728F000ADE4D /* MainViewController.swift */; };
@@ -92,6 +93,7 @@
 		57AADD532A563B9A002E5711 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57AADD552A563B9A002E5711 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57ABEFF12A585B2F0034F0BE /* SectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionButton.swift; sourceTree = "<group>"; };
+		57B37B832A6761E80001CC97 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		57B5937D2A573747000ADE4D /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		57B5937F2A5737F5000ADE4D /* OnboardingDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDataManager.swift; sourceTree = "<group>"; };
 		57B593852A57728F000ADE4D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				576DA0BC2A5F57CF005D2CC8 /* WeatherDataModel.swift */,
 				576DA0C02A5F5D51005D2CC8 /* WeatherManager.swift */,
 				57978C912A6159FF00BE10F4 /* HourlyWeatherManager.swift */,
+				57B37B822A6761E80001CC97 /* CoreDataModel.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				57A3D7752A5C689400EDA4AE /* ForecastCollectionViewCell.swift in Sources */,
 				5799ABBB2A62ECC40065537E /* File.swift in Sources */,
 				57A3D5F72A5D63F500CB4F00 /* PrecipitationView.swift in Sources */,
+				57B37B842A6761E80001CC97 /* CoreDataModel.xcdatamodeld in Sources */,
 				57ABEFF22A585B2F0034F0BE /* SectionButton.swift in Sources */,
 				57AADD482A563B92002E5711 /* AppDelegate.swift in Sources */,
 				578814972A640314006A7EE8 /* String+ Extension.swift in Sources */,
@@ -611,6 +615,19 @@
 			productName = BonsaiController;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		57B37B822A6761E80001CC97 /* CoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				57B37B832A6761E80001CC97 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = 57B37B832A6761E80001CC97 /* CoreDataModel.xcdatamodel */;
+			path = CoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 57AADD3C2A563B92002E5711 /* Project object */;
 }
