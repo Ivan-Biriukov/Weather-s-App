@@ -419,7 +419,7 @@ class TodayView: UIView {
         lb.font = .poppinsMedium12()
         lb.textColor = .white
         lb.textAlignment = .center
-        lb.text = "Unknown"
+        lb.text = "--"
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -458,7 +458,7 @@ class TodayView: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fill
-        stack.spacing = 35
+        stack.spacing = 15
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -706,7 +706,7 @@ class TodayView: UIView {
         conffigure()
         setupConstraints()
         setupDifferentColorsForLabels()
-        addDashedBorder(startX: 15, startY: 220, endX: Int(self.bounds.width) - 20, endY: 220)
+        addDashedBorder(startX: 15, startY: 230, endX: Int(self.bounds.width) - 20, endY: 230)
         setupCollection()
         setupTableView()
         airPressureProgressView.translatesAutoresizingMaskIntoConstraints = false
@@ -883,7 +883,7 @@ class TodayView: UIView {
             airPressureCurrentIndexValue.topAnchor.constraint(equalTo: airPressureProgressView.bottomAnchor, constant: 30),
             airPressureCurrentIndexValue.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 52),
             airPressureComentLabel.topAnchor.constraint(equalTo: airPressureTitleStack.bottomAnchor, constant: 31),
-            airPressureComentLabel.leadingAnchor.constraint(equalTo: airPressureProgressMaxValue.trailingAnchor, constant: 25),
+            airPressureComentLabel.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 155),
             airPressureComentLabel.trailingAnchor.constraint(equalTo: pressureContainer.trailingAnchor, constant: -20),
             airQuelityBottomStack.leadingAnchor.constraint(equalTo: pressureContainer.leadingAnchor, constant: 18),
             airQuelityBottomStack.trailingAnchor.constraint(equalTo: pressureContainer.trailingAnchor, constant: -18),
@@ -905,7 +905,7 @@ class TodayView: UIView {
             sunMoonWayView.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 55),
             
             currentTimeValueLabel.topAnchor.constraint(equalTo: sunPhasesContainer.topAnchor, constant: 70),
-            currentTimeValueLabel.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 77)
+            currentTimeValueLabel.leadingAnchor.constraint(equalTo: sunRiseVerticalStack.trailingAnchor, constant: 70)
 
         ])
     }
@@ -959,7 +959,7 @@ class TodayView: UIView {
             secondLineStack.distribution = .fill
             secondLineStack.spacing = 20
             firstGroupStack.distribution = .fill
-            firstGroupStack.spacing = 70
+            firstGroupStack.spacing = 50
             NSLayoutConstraint.activate([
                 firstGroupStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
                 firstGroupStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
@@ -968,7 +968,7 @@ class TodayView: UIView {
                 airQuelityBottomStack.bottomAnchor.constraint(equalTo: pressureContainer.bottomAnchor)
             ])
             secondGroupStack.distribution = .fill
-            secondGroupStack.spacing = 90
+            secondGroupStack.spacing = 50
             airQuelityBottomStack.axis = .vertical
         } else {
             secondLineStack.distribution = .fill
@@ -1029,13 +1029,11 @@ extension TodayView : UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         }
-
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
-    
 }
 
 // MARK: - HourlyWeatherManagerDelegate

@@ -139,6 +139,7 @@ class MainViewController: UIViewController {
         changeButtonsTitleStyle(titleText: "Forecast", button: forecastButton, selected: false)
         changeButtonsTitleStyle(titleText: "Precipitation", button: precipitationButton, selected: false)
         todayView.setupCurrentTimeLabelValue()
+        contentScrollView.scrollToTop()
     }
     
     @objc func forecastButtonTaped(_ sender: UIButton) {
@@ -149,6 +150,7 @@ class MainViewController: UIViewController {
         changeButtonsTitleStyle(titleText: "Forecast", button: sender, selected: true)
         changeButtonsTitleStyle(titleText: "Today", button: todayButton, selected: false)
         changeButtonsTitleStyle(titleText: "Precipitation", button: precipitationButton, selected: false)
+        contentScrollView.scrollToTop()
     }
     
     @objc func precipitationButtonTaped(_ sender: UIButton) {
@@ -159,6 +161,7 @@ class MainViewController: UIViewController {
         changeButtonsTitleStyle(titleText: "Precipitation", button: sender, selected: true)
         changeButtonsTitleStyle(titleText: "Today", button: todayButton, selected: false)
         changeButtonsTitleStyle(titleText: "Forecast", button: forecastButton, selected: false)
+        contentScrollView.scrollToTop()
     }
     
     
@@ -232,7 +235,7 @@ class MainViewController: UIViewController {
             todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
             todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
             todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor, constant: -60),
         ])
     }
     
@@ -244,7 +247,7 @@ class MainViewController: UIViewController {
             todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
             todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
             todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor)
+            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor, constant: -60)
             ])
         } else {
             contentScrollView.addSubview(todayView)
@@ -252,7 +255,7 @@ class MainViewController: UIViewController {
             todayView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
             todayView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
             todayView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor)
+            todayView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor, constant: -60)
             ])
         }
     }
