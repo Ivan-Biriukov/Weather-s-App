@@ -107,6 +107,66 @@ class PopupViewController: UIViewController {
         return table
     }()
     
+    // MARK: - Rate Alert UI Section
+    
+    private let buttonStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private lazy var firstStarButton : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "star"), for: .normal)
+        btn.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        btn.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        btn.contentMode = .scaleAspectFill
+        btn.addTarget(self, action: #selector(starButtonTaped(_:)), for: .touchUpInside)
+        btn.tag = 1
+        return btn
+    }()
+    
+    private lazy var secondStarButton : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "star"), for: .normal)
+        btn.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        btn.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        btn.contentMode = .scaleAspectFill
+        btn.addTarget(self, action: #selector(starButtonTaped(_:)), for: .touchUpInside)
+        btn.tag = 2
+        return btn
+    }()
+    
+    private lazy var thirdStarButton : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "star"), for: .normal)
+        btn.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        btn.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        btn.contentMode = .scaleAspectFill
+        btn.addTarget(self, action: #selector(starButtonTaped(_:)), for: .touchUpInside)
+        btn.tag = 3
+        return btn
+    }()
+    
+    private lazy var fourthStarButton : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "star"), for: .normal)
+        btn.addTarget(self, action: #selector(starButtonTaped(_:)), for: .touchUpInside)
+        btn.tag = 4
+        return btn
+    }()
+    
+    private lazy var fifthStarButton : UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "star"), for: .normal)
+        btn.addTarget(self, action: #selector(starButtonTaped(_:)), for: .touchUpInside)
+        btn.tag = 5
+        return btn
+    }()
+    
+    
     // MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
@@ -133,6 +193,11 @@ class PopupViewController: UIViewController {
         view.addSubview(botTableSeparate)
         view.addSubview(toolsTitle)
         view.addSubview(notificationsTableView)
+        buttonStack.addArrangedSubview(firstStarButton)
+        buttonStack.addArrangedSubview(secondStarButton)
+        buttonStack.addArrangedSubview(thirdStarButton)
+        buttonStack.addArrangedSubview(fourthStarButton)
+        buttonStack.addArrangedSubview(fifthStarButton)
     }
     
     private func setupTableView() {
@@ -181,6 +246,9 @@ class PopupViewController: UIViewController {
         dismiss(animated: true)
     }
 
+    @objc func starButtonTaped(_ sender: UIButton) {
+        
+    }
 }
 
 // MARK: - TableView Delegate & DataSource
@@ -217,6 +285,29 @@ extension PopupViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if tableView == notificationsTableView {
+            if indexPath.row == 0 {
+                let alert = UIAlertController(title: "FeedBack", message: "Write Your message", preferredStyle: .alert)
+                alert.addTextField { (textField) in
+                    textField.placeholder = "Enter message text"
+                }
+                let sendButton = UIAlertAction(title: "Send", style: .cancel)
+                alert.addAction(sendButton)
+                self.present(alert, animated: true)
+            } else if indexPath.row == 1 {
+                let reateAlert = UIAlertController(title: "Rate", message: "Make your Choise", preferredStyle: .actionSheet)
+                let coolButton = UIAlertAction(title: "Cool", style: .default)
+                reateAlert.addAction(coolButton)
+                let sosoButton = UIAlertAction(title: "So-so", style: .default)
+                reateAlert.addAction(sosoButton)
+                let badButton = UIAlertAction(title: "Bad", style: .default)
+                reateAlert.addAction(badButton)
+                let closeButton = UIAlertAction(title: "Close", style: .destructive)
+                reateAlert.addAction(closeButton)
+                self.present(reateAlert, animated: true)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

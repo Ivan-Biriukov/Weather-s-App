@@ -28,7 +28,7 @@ class ForecastView: UIView {
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 46, height: 100)
         let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        c.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        c.heightAnchor.constraint(equalToConstant: 110).isActive = true
         c.showsHorizontalScrollIndicator = false
         c.backgroundColor = .clear
         c.translatesAutoresizingMaskIntoConstraints = false
