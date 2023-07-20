@@ -35,6 +35,25 @@
 
   ## App pre-view Pictures:
 
+
+<h3 align="center">Launch Screen
+
+<p align="center">
+  <img src="https://github.com/Ivan-Biriukov/Weather-s-App/blob/dev/Снимок%20экрана%202023-07-20%20в%2021.59.44.png" width="30%";>  
+</p>
+
+
+
+<h3 align="center">Onboarding
+
+<p align="center">
+  <img src="https://github.com/Ivan-Biriukov/Weather-s-App/blob/dev/Снимок%20экрана%202023-07-20%20в%2021.58.59.png" width="30%";>  
+  <img src="https://github.com/Ivan-Biriukov/Weather-s-App/blob/dev/Снимок%20экрана%202023-07-20%20в%2021.59.09.png" width="30%";>  
+  <img src="https://github.com/Ivan-Biriukov/Weather-s-App/blob/dev/Снимок%20экрана%202023-07-20%20в%2021.59.22.png" width="30%";> 
+  <img src="https://github.com/Ivan-Biriukov/Weather-s-App/blob/dev/Снимок%20экрана%202023-07-20%20в%2021.59.34.png" width="30%";> 
+</p>
+
+
   <h3 align="center">Main View
   
 
